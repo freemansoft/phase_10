@@ -8,10 +8,13 @@ I want to build a program that can act as a score sheet for the "phase 10" card 
 
 ## Dart solutions
 
-| Directory   | Created with                                        | Results                                                              |
-| ----------- | --------------------------------------------------- | -------------------------------------------------------------------- |
-| lib/copilot | VS Code with Copilot                                | Every one of the models created working code with zero modifications |
-| lib/other   | Locall models via Ollama and Continue.dev extension | None of the models created working code                              |
+Many of the dart files don't compile. They were deliberately left in the source tree as created by the LLM with no manual fixes
+
+| Directory              | Created with                                                                 | Results                                                                               |
+| ---------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| lib/copilot            | VS Code with Copilot no request for theme switch                             | Every one of the models created working code with zero modifications                  |
+| lib/copilot/light_dark | VS Code with Copilot asking for a theme switch                               | Everyone of the models except for one created working code  with zero modifications   |
+| lib/other/light_dark   | Local models via Ollama and Continue.dev extension asking for a theme switch | None of the models created working code  with zero modifications                      |
 
 ## Files
 
