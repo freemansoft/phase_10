@@ -40,9 +40,4 @@ The next 12 columns hold the information for an individual round. There are two 
 
 ## Variations
 
-* For Gemeni flash the "Create a" had to be changed to "update a"
-* The same for gpt_4.1 pre
-* Gemeni 2.0 flash wouldn't generate another copy because it found stuff that already did what I asked when asking for light dark
-* Sometimes I had to say "ignore all the existing files"
-* gemini 2.0 trying to add light and dark invalid code
-*
+* Sometimes we needed to change `create a flutter main.dart` to `update a flutter main.dart`.
