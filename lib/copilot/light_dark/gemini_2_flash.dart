@@ -12,9 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Phase 10 Score Keeper',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       darkTheme: ThemeData.dark(),
       themeMode: ThemeMode.system,
       home: const ScoreboardScreen(),
@@ -70,10 +68,11 @@ class _ScoreboardScreenState extends State<ScoreboardScreen> {
         rowsTitleWidth: 150,
         contentCellWidth: 80,
         cellHeight: 50,
-        columnsTitleBuilder: (i) => Text(
-          'Round ${i + 1}',
-          style: const TextStyle(fontWeight: FontWeight.bold),
-        ),
+        columnsTitleBuilder:
+            (i) => Text(
+              'Round ${i + 1}',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
         rowsTitleBuilder: (i) {
           int totalScore = 0;
           for (var scoreController in _scores[i]) {
@@ -98,51 +97,53 @@ class _ScoreboardScreenState extends State<ScoreboardScreen> {
             ],
           );
         },
-        contentCellBuilder: (i, j) => Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: Column(
-            children: [
-              SizedBox(
-                width: 70,
-                height: 25,
-                child: TextFormField(
-                  controller: _scores[j][i],
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    contentPadding: EdgeInsets.symmetric(horizontal: 8),
+        contentCellBuilder:
+            (i, j) => Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Column(
+                children: [
+                  SizedBox(
+                    width: 70,
+                    height: 25,
+                    child: TextFormField(
+                      controller: _scores[j][i],
+                      keyboardType: TextInputType.number,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 8),
+                      ),
+                    ),
                   ),
-                ),
+                  DropdownButton<String>(
+                    value: _phases[j][i],
+                    items:
+                        <String>[
+                          'N/A',
+                          '1',
+                          '2',
+                          '3',
+                          '4',
+                          '5',
+                          '6',
+                          '7',
+                          '8',
+                          '9',
+                          '10',
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _phases[j][i] = newValue!;
+                      });
+                    },
+                  ),
+                ],
               ),
-              DropdownButton<String>(
-                value: _phases[j][i],
-                items: <String>[
-                  'N/A',
-                  '1',
-                  '2',
-                  '3',
-                  '4',
-                  '5',
-                  '6',
-                  '7',
-                  '8',
-                  '9',
-                  '10'
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _phases[j][i] = newValue!;
-                  });
-                },
-              ),
-            ],
-          ),
-        ),
+            ),
       ),
     );
   }
