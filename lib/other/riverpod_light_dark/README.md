@@ -12,7 +12,6 @@ None of them generated runnable code.
 
 ## Prompt
 
-```text
 Create a flutter main.dart to implement the following game program in Flutter.
 
 - This is a game score-keeping application built in flutter that can be used when playing the card game "phase 10".
@@ -23,4 +22,3 @@ Create a flutter main.dart to implement the following game program in Flutter.
 - The next 12 columns hold the information for an individual round. There are two fields for each round. The individual round information fields contain the points for that round and a droplist containing the phase completed in that round, if any.   The score attribute is an editable numeric input field. The phase completed dropdown should offer a blank value and the numbers 1 through 10
 - riverpod 2 or riverpod 3 should be used for state management
 - Use some type of table that can freeze the first column possibly data_table_2 or flutter_table or table_sticky_headers
-```

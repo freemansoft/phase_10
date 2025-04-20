@@ -22,7 +22,7 @@ Each file contains the output of a copilot or other LLM.  The context was adjust
 
 ## Our prompt
 
-```text
+
 Create a flutter main.dart to implement the following game program in Flutter.
 
 A game score-keeping application built in flutter for the card game "phase 10".
@@ -36,7 +36,7 @@ The UI should be a horizontally scrollable tabular UI that displays the player's
 The first column of the UI should show the total score for each player and the player's name at the start of each row. The player's name should be editable. The total score field holds the sum of the scores in that row.
 
 The next 12 columns hold the information for an individual round. There are two fields for each round. The individual round information fields contain the points for that round and a droplist containing the phase completed in that round, if any.   The score attribute is a numeric input field. The phase completed dropdown should offer a blank value and the numbers 1 through 10
-```
+
 
 ## Variations
 
