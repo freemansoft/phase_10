@@ -2,6 +2,17 @@
 
 This is a variation of the `riverpod light dark` but where I told it the state classes.
 
+## Generated files
+
+| File                       | compiles | run issues    |
+| -------------------------- | -------- | ------------- |
+| main_claud_3_5_sonnet.dart | yes      | blank         |
+| main_gemini_2_0_flash.dart | yes      | runs but ugly |
+| main_gpt_41.dart           | yes      | blank         |
+| main_gpt_4o.dart           | yes      | blank         |
+
+## LLM Context
+
 I used this pubspec.yaml as the context
 
 ```yaml
