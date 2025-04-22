@@ -10,11 +10,17 @@ I want to build a program that can act as a score sheet for the "phase 10" card 
 
 Many of the dart files don't compile. They were deliberately left in the source tree as created by the LLM with no manual fixes
 
-| Directory              | Created with                                                                 | Results                                                                               |
-| ---------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| lib/copilot            | VS Code with Copilot no request for theme switch                             | Every one of the models created working code with zero modifications                  |
-| lib/copilot/light_dark | VS Code with Copilot asking for a theme switch                               | Everyone of the models except for one created working code  with zero modifications   |
-| lib/other/light_dark   | Local models via Ollama and Continue.dev extension asking for a theme switch | None of the models created working code  with zero modifications                      |
+| Directory                             | Created with                  | Scope                                      | Results                      |
+| ------------------------------------- | ----------------------------- | ------------------------------------------ | ---------------------------- |
+| lib/copilot                           | Copilot Chat                  | no request for theme switch                | Zero modifications           |
+| lib/copilot/fisrst_attempt            | Copilot Chat                  | Just the basic problem                     | Models work                  |
+| lib/copilot/light_dark                | Copilot Chat                  | basic problem plus theme switch            | Models work                  |
+| lib/copilot/riverpod_light_dark       | Copilot Chat                  | riverpod and a theme switch                | Models work                  |
+| lib/copilot/riverpod_light_dark_model | Copilot Chat                  | riverpod, model objects and a theme switch | Compile but fail with errors |
+| lib/other/light_dark                  | Local Ollama and Continue.dev | basic problem plust theme switch           | No models working            |
+| lib/other/riverpod_light_dark         | Local Ollama and Continue.dev | riverpod and  theme switch                 | No models working            |
+
+You can run the individual models ignoring the warning about project errors because all the apps are just one file.
 
 ## Files
 

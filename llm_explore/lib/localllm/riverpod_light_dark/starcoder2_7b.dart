@@ -1,1 +1,1 @@
-// no usefule code generated
+// no useful code generated
