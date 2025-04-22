@@ -1,6 +1,6 @@
 # phase_10_2
 
-This is a variation of the `riverpod light dark` but where I told it the state classes.
+This is a variation of the `riverpod light dark` but where I told it to use model objects to hold state.
 
 ## Generated files
 
