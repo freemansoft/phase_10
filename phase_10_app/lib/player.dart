@@ -1,0 +1,14 @@
+import 'scores.dart';
+import 'phases.dart';
+
+class Player {
+  final String name;
+  final Scores scores;
+  final Phases phases;
+
+  Player({required this.name, scores, phases})
+    : scores = scores ?? Scores(),
+      phases = phases ?? Phases();
+
+  int get totalScore => scores.total;
+}
