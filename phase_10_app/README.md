@@ -15,7 +15,15 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## Prompt Stream
+## Prompt logs from the inital session
+
+[Chat JSON file exported from vs code.](chat_1.json).
+
+- Saved with `ctrl-shift-p` `Chat export chat`.
+- Can Reload into VSCode with `ctrl-p` `Chat: import chat`
+- Makrdown version exists at [Chat md file](chat_1.md).
+
+## Initial Prompt
 
 Create Flutter application code using this prompt. The output should be a complete flutter application with all necessary files and folders.
 
