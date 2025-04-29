@@ -999,3 +999,667 @@ SizedBox(
 ````
 
 **This will select the whole name when the field is clicked.**
+
+freemansoft: change the name entry text field so that all the text is selected when a user clicks in the field to edit the name
+
+GitHub Copilot: ````dart
+// ...existing code...
+SizedBox(
+  width: 120,
+  child: Builder(
+    builder: (context) {
+      final controller = TextEditingController(text: player.name);
+      return TextFormField(
+        controller: controller,
+        textAlign: TextAlign.center,
+        decoration: const InputDecoration(
+          isDense: true,
+          contentPadding: EdgeInsets.symmetric(
+            vertical: 6,
+            horizontal: 8,
+          ),
+          border: OutlineInputBorder(),
+        ),
+        style: const TextStyle(fontWeight: FontWeight.bold),
+        onChanged: (val) {
+          ref
+              .read(playersProvider.notifier)
+              .updatePlayerName(playerIdx, val);
+        },
+        onTap: () {
+          controller.selection = TextSelection(
+            baseOffset: 0,
+            extentOffset: controller.text.length,
+          );
+        },
+      );
+    },
+  ),
+),
+// ...existing code...
+````
+
+This change ensures that when a user clicks in the name field, all the text is selected for easy editing.
+
+freemansoft: The text in the name field is now being shown or typed in backwords or reverse
+
+GitHub Copilot: This happens because a new `TextEditingController` is created every build with `text: player.name`. When you set the controller's text like this, the cursor is placed at the start, and Flutter may reverse the text as you type.
+
+**Solution:**
+You should not create a new `TextEditingController` on every build. Instead, use the `controller` only for initial value, or better, manage a list of controllers outside the builder, or use `initialValue` without a controller.
+
+**Quick fix:**
+Remove the `controller` and use `initialValue`:
+
+````dart
+// ...existing code...
+return TextFormField(
+  initialValue: player.name,
+  textAlign: TextAlign.center,
+  decoration: const InputDecoration(
+    isDense: true,
+    contentPadding: EdgeInsets.symmetric(
+      vertical: 6,
+      horizontal: 8,
+    ),
+    border: OutlineInputBorder(),
+  ),
+  style: const TextStyle(fontWeight: FontWeight.bold),
+  onChanged: (val) {
+    ref
+        .read(playersProvider.notifier)
+        .updatePlayerName(playerIdx, val);
+  },
+  onTap: () {
+    // Select all text on tap
+    // This only works with a controller, so you can omit this or use a FocusNode solution if needed
+  },
+);
+// ...existing code...
+````
+
+**If you want to keep the "select all on tap" feature, you need to manage controllers outside the builder.**
+But for most use cases, using `initialValue` is correct and will fix the reversed/backwards typing issue.
+
+freemansoft: I want the text to be entered correctly and all the text to be highlighted when I click in the field.  What changes should I make to the texteditingcontroller and ontap
+
+GitHub Copilot: To ensure the text is entered correctly **and** all text is selected on click, you should:
+
+1. **Do not set both `initialValue` and `controller`** on the same `TextFormField`. Use only the `controller`.
+2. **Create the `TextEditingController` only once per player** (not on every build), or at least set its `.text` only when the value changes, not every build.
+3. **Select all text in the `onTap` handler** using the controller.
+
+**Quick fix for your current code:**
+
+Replace this block:
+```dart
+final controller = TextEditingController(
+  text: player.name,
+);
+return TextFormField(
+  initialValue: player.name,
+  controller: controller,
+  ...
+  onTap: () {
+    controller.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: controller.text.length,
+    );
+  },
+);
+```
+
+With this:
+```dart
+final controller = TextEditingController(text: player.name);
+return TextFormField(
+  controller: controller,
+  textAlign: TextAlign.center,
+  decoration: const InputDecoration(
+    isDense: true,
+    contentPadding: EdgeInsets.symmetric(
+      vertical: 6,
+      horizontal: 8,
+    ),
+    border: OutlineInputBorder(),
+  ),
+  style: const TextStyle(fontWeight: FontWeight.bold),
+  onChanged: (val) {
+    ref
+        .read(playersProvider.notifier)
+        .updatePlayerName(playerIdx, val);
+  },
+  onTap: () {
+    // Select all text on tap
+    controller.selection = TextSelection(
+      baseOffset: 0,
+      extentOffset: controller.text.length,
+    );
+  },
+);
+```
+
+**But:**
+Creating a new controller every build is not ideal. For best results, manage a list of controllers outside the builder (e.g., in your widget's state) and reuse them.
+If you want a quick fix, the above will work, but you may see the cursor jump if the widget rebuilds often.
+
+**Summary:**
+- Use only `controller`, not `initialValue` with `controller`.
+- Set the selection in `onTap`.
+- For production, manage controllers outside the builder to avoid cursor jumps.
+
+freemansoft: Lets start over with the player name field editing.
+
+GitHub Copilot: Certainly! Here’s a robust and Flutter-recommended way to handle player name editing so that:
+
+- The text is entered and displayed correctly.
+- All text is selected when the user clicks/taps into the field.
+- No reversed/backwards text issues occur.
+
+**How to do it:**
+
+1. **Use a TextEditingController for each player.**
+2. **Store controllers in a State class (if using StatefulWidget) or in a local variable if you’re OK with recreating them (not recommended for large tables).**
+3. **Set the controller’s text only when the player name changes, not on every build.**
+4. **Select all text in the onTap handler.**
+
+---
+
+### Example: Minimal Solution for Your Table
+
+Replace your player name field with this code:
+
+````dart
+// ...inside your DataCell for player name...
+Builder(
+  builder: (context) {
+    final controller = TextEditingController(text: player.name);
+    return TextFormField(
+      controller: controller,
+      textAlign: TextAlign.center,
+      decoration: const InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 6,
+          horizontal: 8,
+        ),
+        border: OutlineInputBorder(),
+      ),
+      style: const TextStyle(fontWeight: FontWeight.bold),
+      onChanged: (val) {
+        ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);
+      },
+      onTap: () {
+        controller.selection = TextSelection(
+          baseOffset: 0,
+          extentOffset: controller.text.length,
+        );
+      },
+    );
+  },
+),
+````
+
+---
+
+**Note:**
+- This works for small tables. For a large table, you should manage controllers in a `StatefulWidget` to avoid creating new controllers every build.
+- If you want to avoid the controller being recreated on every build, store a `List<TextEditingController>` in your widget’s state and update their `.text` when the player name changes.
+
+Let me know if you want the advanced version with persistent controllers!
+
+freemansoft: show me the advanced version with persistent controllers and stateful widgets
+
+GitHub Copilot: ````dart
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:data_table_2/data_table_2.dart';
+import 'players_provider.dart';
+
+class ScoreTable extends ConsumerStatefulWidget {
+  const ScoreTable({super.key});
+
+  @override
+  ConsumerState<ScoreTable> createState() => _ScoreTableState();
+}
+
+class _ScoreTableState extends ConsumerState<ScoreTable> {
+  final Map<int, TextEditingController> _nameControllers = {};
+
+  @override
+  void dispose() {
+    for (final controller in _nameControllers.values) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final players = ref.watch(playersProvider);
+
+    // Keep controllers in sync with player names
+    for (int i = 0; i < players.length; i++) {
+      final player = players[i];
+      if (!_nameControllers.containsKey(i)) {
+        _nameControllers[i] = TextEditingController(text: player.name);
+      } else if (_nameControllers[i]!.text != player.name) {
+        _nameControllers[i]!.text = player.name;
+      }
+    }
+
+    return DataTable2(
+      columnSpacing: 12,
+      horizontalMargin: 12,
+      minWidth: 1200,
+      fixedLeftColumns: 1,
+      fixedTopRows: 1,
+      isHorizontalScrollBarVisible: true,
+      isVerticalScrollBarVisible: true,
+      dataRowHeight: 74,
+      columns: [
+        const DataColumn2(
+          label: Text('Player / Total'),
+          size: ColumnSize.L,
+          fixedWidth: 100,
+        ),
+        ...List.generate(
+          12,
+          (round) => DataColumn2(
+            label: Text('Round ${round + 1}'),
+            size: ColumnSize.S,
+          ),
+        ),
+      ],
+      rows: List<DataRow2>.generate(players.length, (playerIdx) {
+        final player = players[playerIdx];
+        final isEven = playerIdx % 2 == 0;
+        final nameController = _nameControllers[playerIdx]!;
+
+        return DataRow2(
+          color: WidgetStateProperty.resolveWith<Color?>(
+            (Set<WidgetState> states) {
+              return isEven
+                  ? Colors.red.withAlpha(20)
+                  : Colors.blue.withAlpha(20);
+            },
+          ),
+          cells: [
+            DataCell(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 120,
+                    child: TextFormField(
+                      controller: nameController,
+                      textAlign: TextAlign.center,
+                      decoration: const InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: 6,
+                          horizontal: 8,
+                        ),
+                        border: OutlineInputBorder(),
+                      ),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      onChanged: (val) {
+                        ref
+                            .read(playersProvider.notifier)
+                            .updatePlayerName(playerIdx, val);
+                      },
+                      onTap: () {
+                        nameController.selection = TextSelection(
+                          baseOffset: 0,
+                          extentOffset: nameController.text.length,
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    width: 120,
+                    margin: const EdgeInsets.only(top: 1),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 2,
+                      horizontal: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      '${player.totalScore}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ...List<DataCell>.generate(12, (round) {
+              final phase = player.phases.getPhase(round);
+              final score = player.scores.getScore(round);
+              return DataCell(
+                SizedBox(
+                  width: 90,
+                  child: Column(
+                    children: [
+                      DropdownButtonFormField<int?>(
+                        value: phase,
+                        isExpanded: true,
+                        hint: const Text('Phase'),
+                        items: [
+                          const DropdownMenuItem<int?>(
+                            value: null,
+                            child: Text('None'),
+                          ),
+                          ...List.generate(
+                            10,
+                            (i) => DropdownMenuItem<int?>(
+                              value: i + 1,
+                              child: Text('${i + 1}'),
+                            ),
+                          ),
+                        ],
+                        onChanged: (val) {
+                          ref
+                              .read(playersProvider.notifier)
+                              .updatePhase(playerIdx, round, val);
+
+                          // Show a 10 second alert with all completed phases
+                          final completedPhases =
+                              player.phases.completedPhasesList();
+                          if (completedPhases.isNotEmpty) {
+                            final snackBar = SnackBar(
+                              content: Text(
+                                '${player.name}: ${completedPhases.join(', ')}',
+                              ),
+                              duration: const Duration(seconds: 10),
+                            );
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(snackBar);
+                          }
+                        },
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 6,
+                            horizontal: 8,
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      TextFormField(
+                        initialValue: score?.toString() ?? '',
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: 'Score',
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 6,
+                            horizontal: 8,
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged: (val) {
+                          final parsed = int.tryParse(val);
+                          ref
+                              .read(playersProvider.notifier)
+                              .updateScore(playerIdx, round, parsed);
+                        },
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
+          ],
+        );
+      }),
+    );
+  }
+}
+````
+
+**Key points:**
+- The widget is now a `ConsumerStatefulWidget`.
+- A persistent `TextEditingController` is created for each player and kept in sync with the player name.
+- All text is selected on tap.
+- No reversed/backwards text issue, and controllers are properly disposed.
+
+freemansoft: Move the round score text field configuration to its on class and file
+
+GitHub Copilot: ````dart
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class RoundScoreField extends StatelessWidget {
+  final int? score;
+  final ValueChanged<int?> onChanged;
+
+  const RoundScoreField({
+    super.key,
+    required this.score,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      initialValue: score?.toString() ?? '',
+      keyboardType: TextInputType.number,
+      decoration: const InputDecoration(
+        hintText: 'Score',
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 6,
+          horizontal: 8,
+        ),
+        border: OutlineInputBorder(),
+      ),
+      onChanged: (val) {
+        final parsed = int.tryParse(val);
+        onChanged(parsed);
+      },
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+    );
+  }
+}
+````
+
+**Now update your score_table.dart to use this new widget:**
+
+````dart
+import 'round_score_field.dart';
+// ...existing code...
+...List<DataCell>.generate(12, (round) {
+  final phase = player.phases.getPhase(round);
+  final score = player.scores.getScore(round);
+  return DataCell(
+    SizedBox(
+      width: 90,
+      child: Column(
+        children: [
+          DropdownButtonFormField<int?>(
+            // ...existing dropdown config...
+          ),
+          RoundScoreField(
+            score: score,
+            onChanged: (parsed) {
+              ref
+                  .read(playersProvider.notifier)
+                  .updateScore(playerIdx, round, parsed);
+            },
+          ),
+        ],
+      ),
+    ),
+  );
+}),
+// ...existing code...
+````
+
+freemansoft: Make the RoundScoreField highlight all the text when a user clicks in the field and make sure the text appears in the correct order as enterfd
+
+GitHub Copilot: ````dart
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class RoundScoreField extends StatefulWidget {
+  final int? score;
+  final ValueChanged<int?> onChanged;
+
+  const RoundScoreField({
+    super.key,
+    required this.score,
+    required this.onChanged,
+  });
+
+  @override
+  State<RoundScoreField> createState() => _RoundScoreFieldState();
+}
+
+class _RoundScoreFieldState extends State<RoundScoreField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: widget.score?.toString() ?? '',
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant RoundScoreField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final newText = widget.score?.toString() ?? '';
+    if (_controller.text != newText) {
+      _controller.text = newText;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: _controller,
+      keyboardType: TextInputType.number,
+      decoration: const InputDecoration(
+        hintText: 'Score',
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 6,
+          horizontal: 8,
+        ),
+        border: OutlineInputBorder(),
+      ),
+      onChanged: (val) {
+        final parsed = int.tryParse(val);
+        widget.onChanged(parsed);
+      },
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      onTap: () {
+        _controller.selection = TextSelection(
+          baseOffset: 0,
+          extentOffset: _controller.text.length,
+        );
+      },
+    );
+  }
+}
+````
+
+This ensures the text is always entered in the correct order and all text is selected when the field is clicked.
+
+freemansoft: add an ontap to RoundScores so that all the text is selected when the user taps into the field
+
+GitHub Copilot: ````dart
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+class RoundScoreField extends StatefulWidget {
+  final int? score;
+  final ValueChanged<int?> onChanged;
+
+  const RoundScoreField({
+    super.key,
+    required this.score,
+    required this.onChanged,
+  });
+
+  @override
+  State<RoundScoreField> createState() => _RoundScoreFieldState();
+}
+
+class _RoundScoreFieldState extends State<RoundScoreField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: widget.score?.toString() ?? '',
+    );
+  }
+
+  @override
+  void didUpdateWidget(covariant RoundScoreField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    final newText = widget.score?.toString() ?? '';
+    if (_controller.text != newText) {
+      _controller.text = newText;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: _controller,
+      keyboardType: TextInputType.number,
+      decoration: const InputDecoration(
+        hintText: 'Score',
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 6,
+          horizontal: 8,
+        ),
+        border: OutlineInputBorder(),
+      ),
+      onChanged: (val) {
+        final parsed = int.tryParse(val);
+        widget.onChanged(parsed);
+      },
+      inputFormatters: [
+        FilteringTextInputFormatter.digitsOnly,
+      ],
+      onTap: () {
+        _controller.selection = TextSelection(
+          baseOffset: 0,
+          extentOffset: _controller.text.length,
+        );
+      },
+    );
+  }
+}
+````

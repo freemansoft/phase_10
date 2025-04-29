@@ -23,6 +23,13 @@ samples, guidance on mobile development, and a full API reference.
 - Can Reload into VSCode with `ctrl-p` `Chat: import chat`
 - Makrdown version exists at [Chat md file](chat_1.md).
 
+[Chat Markdown file exported from vs code.](chat_1.md)
+
+- Saved with
+- Cursor in chat view
+- `right mouse` `copy all`
+- Paste into chat_1.md
+
 ## Initial Prompt
 
 Create Flutter application code using this prompt. The output should be a complete flutter application with all necessary files and folders.

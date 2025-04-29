@@ -2,14 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:phase_10_app/round_score_field.dart';
 import 'players_provider.dart';
 
-class ScoreTable extends ConsumerWidget {
+class ScoreTable extends ConsumerStatefulWidget {
   const ScoreTable({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ScoreTable> createState() => _ScoreTableState();
+}
+
+class _ScoreTableState extends ConsumerState<ScoreTable> {
+  final Map<int, TextEditingController> _nameControllers = {};
+
+  @override
+  void dispose() {
+    for (final controller in _nameControllers.values) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final players = ref.watch(playersProvider);
+
+    // Keep controllers in sync with player names
+    for (int i = 0; i < players.length; i++) {
+      final player = players[i];
+      if (!_nameControllers.containsKey(i)) {
+        _nameControllers[i] = TextEditingController(text: player.name);
+      } else if (_nameControllers[i]!.text != player.name) {
+        _nameControllers[i]!.text = player.name;
+      }
+    }
 
     return DataTable2(
       columnSpacing: 12,
@@ -37,6 +63,8 @@ class ScoreTable extends ConsumerWidget {
       rows: List<DataRow2>.generate(players.length, (playerIdx) {
         final player = players[playerIdx];
         final isEven = playerIdx % 2 == 0;
+        final nameController = _nameControllers[playerIdx]!;
+
         return DataRow2(
           color: WidgetStateProperty.resolveWith<Color?>((
             Set<WidgetState> states,
@@ -53,7 +81,7 @@ class ScoreTable extends ConsumerWidget {
                   SizedBox(
                     width: 120,
                     child: TextFormField(
-                      initialValue: player.name,
+                      controller: nameController,
                       textAlign: TextAlign.center,
                       decoration: const InputDecoration(
                         isDense: true,
@@ -68,6 +96,12 @@ class ScoreTable extends ConsumerWidget {
                         ref
                             .read(playersProvider.notifier)
                             .updatePlayerName(playerIdx, val);
+                      },
+                      onTap: () {
+                        nameController.selection = TextSelection(
+                          baseOffset: 0,
+                          extentOffset: nameController.text.length,
+                        );
                       },
                     ),
                   ),
@@ -129,7 +163,7 @@ class ScoreTable extends ConsumerWidget {
                               content: Text(
                                 '${player.name}: ${completedPhases.join(', ')}',
                               ),
-                              duration: const Duration(seconds: 5),
+                              duration: const Duration(seconds: 10),
                             );
                             ScaffoldMessenger.of(
                               context,
@@ -142,33 +176,16 @@ class ScoreTable extends ConsumerWidget {
                             vertical: 6,
                             horizontal: 8,
                           ),
-                          border:
-                              OutlineInputBorder(), // <-- Add outline border here
+                          border: OutlineInputBorder(),
                         ),
                       ),
-                      TextFormField(
-                        initialValue: score?.toString() ?? '',
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          hintText: 'Score',
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: 6,
-                            horizontal: 8,
-                          ),
-                          border: OutlineInputBorder(), // <-- Add this line
-                        ),
-                        onChanged: (val) {
-                          final parsed = int.tryParse(val);
+                      RoundScoreField(
+                        score: score,
+                        onChanged: (parsed) {
                           ref
                               .read(playersProvider.notifier)
                               .updateScore(playerIdx, round, parsed);
                         },
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                        // this adds a character counter
-                        // maxLength: 4,
                       ),
                     ],
                   ),
