@@ -137,7 +137,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                               content: Text(
                                 '${player.name}: ${completedPhases.join(', ')}',
                               ),
-                              duration: const Duration(seconds: 10),
+                              duration: const Duration(seconds: 3),
                             );
                             ScaffoldMessenger.of(
                               context,

@@ -1938,3 +1938,29 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
 }
 // ...existing code...
 ````
+
+freemansoft: change the toast duration to 2 seconds
+
+GitHub Copilot: ````dart
+// ...existing code...
+onChanged: (val) {
+  ref
+      .read(playersProvider.notifier)
+      .updatePhase(playerIdx, round, val);
+
+  // Show a 2 second alert with all completed phases
+  final completedPhases = player.phases.completedPhasesList();
+  if (completedPhases.isNotEmpty) {
+    final snackBar = SnackBar(
+      content: Text(
+        '${player.name}: ${completedPhases.join(', ')}',
+      ),
+      duration: const Duration(seconds: 2), // Changed to 2 seconds
+    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(snackBar);
+  }
+},
+// ...existing code...
+````
