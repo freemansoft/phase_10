@@ -1663,3 +1663,278 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
   }
 }
 ````
+
+freemansoft: Move the name entry text fields and their associated nameControllers TextEditingController to their own PlanerNameField class
+
+GitHub Copilot: ````dart
+import 'package:flutter/material.dart';
+
+class PlayerNameField extends StatefulWidget {
+  final String name;
+  final ValueChanged<String> onChanged;
+
+  const PlayerNameField({
+    super.key,
+    required this.name,
+    required this.onChanged,
+  });
+
+  @override
+  State<PlayerNameField> createState() => _PlayerNameFieldState();
+}
+
+class _PlayerNameFieldState extends State<PlayerNameField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.name);
+  }
+
+  @override
+  void didUpdateWidget(covariant PlayerNameField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.name != widget.name && _controller.text != widget.name) {
+      _controller.text = widget.name;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: _controller,
+      textAlign: TextAlign.center,
+      decoration: const InputDecoration(
+        isDense: true,
+        contentPadding: EdgeInsets.symmetric(
+          vertical: 6,
+          horizontal: 8,
+        ),
+        border: OutlineInputBorder(),
+      ),
+      style: const TextStyle(fontWeight: FontWeight.bold),
+      onChanged: widget.onChanged,
+      onTap: () {
+        _controller.selection = TextSelection(
+          baseOffset: 0,
+          extentOffset: _controller.text.length,
+        );
+      },
+    );
+  }
+}
+````
+
+**Now update your score_table.dart to use this new widget:**
+
+````dart
+import 'player_name_field.dart';
+// ...existing code...
+DataCell(
+  Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      SizedBox(
+        width: 120,
+        child: PlayerNameField(
+          name: player.name,
+          onChanged: (val) {
+            ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);
+          },
+        ),
+      ),
+      Container(
+        width: 120,
+        margin: const EdgeInsets.only(top: 1),
+        padding: const EdgeInsets.symmetric(
+          vertical: 2,
+          horizontal: 8,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Text(
+          '${player.totalScore}',
+          style: const TextStyle(fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    ],
+  ),
+),
+// ...existing code...
+````
+
+This moves the name entry field and its controller logic into a reusable `PlayerNameField` widget.
+
+freemansoft: remove the unneedd _name_controllers from scores_table.dart
+
+GitHub Copilot: ````dart
+// ...existing code...
+class _ScoreTableState extends ConsumerState<ScoreTable> {
+  // Removed: final Map<int, TextEditingController> _nameControllers = {};
+
+  @override
+  void dispose() {
+    // Removed: for (final controller in _nameControllers.values) { controller.dispose(); }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final players = ref.watch(playersProvider);
+
+    // Removed: name controller sync logic
+
+    return DataTable2(
+      columnSpacing: 12,
+      horizontalMargin: 12,
+      minWidth: 1200,
+      fixedLeftColumns: 1,
+      fixedTopRows: 1,
+      isHorizontalScrollBarVisible: true,
+      isVerticalScrollBarVisible: true,
+      dataRowHeight: 74,
+      columns: [
+        const DataColumn2(
+          label: Text('Player / Total'),
+          size: ColumnSize.L,
+          fixedWidth: 100,
+        ),
+        ...List.generate(
+          12,
+          (round) => DataColumn2(
+            label: Text('Round ${round + 1}'),
+            size: ColumnSize.S,
+          ),
+        ),
+      ],
+      rows: List<DataRow2>.generate(players.length, (playerIdx) {
+        final player = players[playerIdx];
+        final isEven = playerIdx % 2 == 0;
+
+        return DataRow2(
+          color: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {
+            return isEven
+                ? Colors.red.withAlpha(20)
+                : Colors.blue.withAlpha(20);
+          }),
+          cells: [
+            DataCell(
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 120,
+                    child: PlayerNameField(
+                      name: player.name,
+                      onChanged: (val) {
+                        ref
+                            .read(playersProvider.notifier)
+                            .updatePlayerName(playerIdx, val);
+                      },
+                    ),
+                  ),
+                  Container(
+                    width: 120,
+                    margin: const EdgeInsets.only(top: 1),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 2,
+                      horizontal: 8,
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Text(
+                      '${player.totalScore}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ...List<DataCell>.generate(12, (round) {
+              final phase = player.phases.getPhase(round);
+              final score = player.scores.getScore(round);
+              return DataCell(
+                SizedBox(
+                  width: 90,
+                  child: Column(
+                    children: [
+                      DropdownButtonFormField<int?>(
+                        value: phase,
+                        isExpanded: true,
+                        hint: const Text('Phase'),
+                        items: [
+                          const DropdownMenuItem<int?>(
+                            value: null,
+                            child: Text('None'),
+                          ),
+                          ...List.generate(
+                            10,
+                            (i) => DropdownMenuItem<int?>(
+                              value: i + 1,
+                              child: Text('${i + 1}'),
+                            ),
+                          ),
+                        ],
+                        onChanged: (val) {
+                          ref
+                              .read(playersProvider.notifier)
+                              .updatePhase(playerIdx, round, val);
+
+                          // Show a 10 second alert with all completed phases
+                          final completedPhases =
+                              player.phases.completedPhasesList();
+                          if (completedPhases.isNotEmpty) {
+                            final snackBar = SnackBar(
+                              content: Text(
+                                '${player.name}: ${completedPhases.join(', ')}',
+                              ),
+                              duration: const Duration(seconds: 10),
+                            );
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(snackBar);
+                          }
+                        },
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 6,
+                            horizontal: 8,
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      RoundScoreField(
+                        score: score,
+                        onChanged: (parsed) {
+                          ref
+                              .read(playersProvider.notifier)
+                              .updateScore(playerIdx, round, parsed);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
+          ],
+        );
+      }),
+    );
+  }
+}
+// ...existing code...
+````

@@ -6744,6 +6744,7 @@
           "kind": "codeblockUri",
           "uri": {
             "$mid": 1,
+            "external": "file:///c%3A/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/round_score_field.dart",
             "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/round_score_field.dart",
             "scheme": "file"
           }
@@ -6919,6 +6920,540 @@
       ],
       "codeCitations": [],
       "timestamp": 1745929981027
+    },
+    {
+      "requestId": "request_5207b60a-bfba-4e7c-8c0b-abbc620e9e85",
+      "message": {
+        "parts": [
+          {
+            "range": {
+              "start": 0,
+              "endExclusive": 125
+            },
+            "editorRange": {
+              "startLineNumber": 1,
+              "startColumn": 1,
+              "endLineNumber": 1,
+              "endColumn": 126
+            },
+            "text": "Move the name entry text fields and their associated nameControllers TextEditingController to their own PlanerNameField class",
+            "kind": "text"
+          }
+        ],
+        "text": "Move the name entry text fields and their associated nameControllers TextEditingController to their own PlanerNameField class"
+      },
+      "variableData": {
+        "variables": [
+          {
+            "id": "vscode.implicit.viewport",
+            "name": "file:score_table.dart",
+            "value": {
+              "uri": {
+                "$mid": 1,
+                "fsPath": "c:\\Users\\joe\\Documents\\GitHub\\freemansoft\\phase_10\\phase_10_app\\lib\\score_table.dart",
+                "_sep": 1,
+                "external": "file:///c%3A/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+                "path": "/C:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+                "scheme": "file"
+              },
+              "range": {
+                "startLineNumber": 22,
+                "startColumn": 1,
+                "endLineNumber": 56,
+                "endColumn": 14
+              }
+            },
+            "isFile": true,
+            "modelDescription": "User's current visible code"
+          }
+        ]
+      },
+      "response": [
+        {
+          "value": "````dart\n",
+          "supportThemeIcons": false,
+          "supportHtml": false,
+          "baseUri": {
+            "$mid": 1,
+            "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/",
+            "scheme": "file"
+          },
+          "uris": {}
+        },
+        {
+          "kind": "codeblockUri",
+          "uri": {
+            "$mid": 1,
+            "external": "file:///c%3A/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/player_name_field.dart",
+            "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/player_name_field.dart",
+            "scheme": "file"
+          }
+        },
+        {
+          "value": "import 'package:flutter/material.dart';\n\nclass PlayerNameField extends StatefulWidget {\n  final String name;\n  final ValueChanged<String> onChanged;\n\n  const PlayerNameField({\n    super.key,\n    required this.name,\n    required this.onChanged,\n  });\n\n  @override\n  State<PlayerNameField> createState() => _PlayerNameFieldState();\n}\n\nclass _PlayerNameFieldState extends State<PlayerNameField> {\n  late final TextEditingController _controller;\n\n  @override\n  void initState() {\n    super.initState();\n    _controller = TextEditingController(text: widget.name);\n  }\n\n  @override\n  void didUpdateWidget(covariant PlayerNameField oldWidget) {\n    super.didUpdateWidget(oldWidget);\n    if (oldWidget.name != widget.name && _controller.text != widget.name) {\n      _controller.text = widget.name;\n    }\n  }\n\n  @override\n  void dispose() {\n    _controller.dispose();\n    super.dispose();\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    return TextFormField(\n      controller: _controller,\n      textAlign: TextAlign.center,\n      decoration: const InputDecoration(\n        isDense: true,\n        contentPadding: EdgeInsets.symmetric(\n          vertical: 6,\n          horizontal: 8,\n        ),\n        border: OutlineInputBorder(),\n      ),\n      style: const TextStyle(fontWeight: FontWeight.bold),\n      onChanged: widget.onChanged,\n      onTap: () {\n        _controller.selection = TextSelection(\n          baseOffset: 0,\n          extentOffset: _controller.text.length,\n        );\n      },\n    );\n  }\n}\n````\n\n**Now update your ",
+          "supportThemeIcons": false,
+          "supportHtml": false,
+          "baseUri": {
+            "$mid": 1,
+            "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/",
+            "scheme": "file"
+          }
+        },
+        {
+          "kind": "inlineReference",
+          "inlineReference": {
+            "$mid": 1,
+            "fsPath": "c:\\Users\\joe\\Documents\\GitHub\\freemansoft\\phase_10\\phase_10_app\\lib\\score_table.dart",
+            "_sep": 1,
+            "external": "file:///c%3A/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+            "path": "/C:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+            "scheme": "file"
+          }
+        },
+        {
+          "value": " to use this new widget:**\n\n````dart\n",
+          "supportThemeIcons": false,
+          "supportHtml": false,
+          "baseUri": {
+            "$mid": 1,
+            "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/",
+            "scheme": "file"
+          }
+        },
+        {
+          "kind": "codeblockUri",
+          "uri": {
+            "$mid": 1,
+            "external": "file:///c%3A/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+            "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+            "scheme": "file"
+          }
+        },
+        {
+          "value": "import 'player_name_field.dart';\n// ...existing code...\nDataCell(\n  Column(\n    crossAxisAlignment: CrossAxisAlignment.start,\n    children: [\n      SizedBox(\n        width: 120,\n        child: PlayerNameField(\n          name: player.name,\n          onChanged: (val) {\n            ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);\n          },\n        ),\n      ),\n      Container(\n        width: 120,\n        margin: const EdgeInsets.only(top: 1),\n        padding: const EdgeInsets.symmetric(\n          vertical: 2,\n          horizontal: 8,\n        ),\n        decoration: BoxDecoration(\n          border: Border.all(color: Colors.grey),\n          borderRadius: BorderRadius.circular(4),\n        ),\n        child: Text(\n          '${player.totalScore}',\n          style: const TextStyle(fontWeight: FontWeight.bold),\n          textAlign: TextAlign.center,\n        ),\n      ),\n    ],\n  ),\n),\n// ...existing code...\n````\n\nThis moves the name entry field and its controller logic into a reusable `PlayerNameField` widget.",
+          "supportThemeIcons": false,
+          "supportHtml": false,
+          "baseUri": {
+            "$mid": 1,
+            "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/",
+            "scheme": "file"
+          }
+        }
+      ],
+      "responseId": "response_ea1d8a04-4ee7-4499-835b-edda7aa7a230",
+      "result": {
+        "timings": {
+          "firstProgress": 3557,
+          "totalElapsed": 9446
+        },
+        "metadata": {
+          "codeBlocks": [
+            {
+              "code": "import 'package:flutter/material.dart';\n\nclass PlayerNameField extends StatefulWidget {\n  final String name;\n  final ValueChanged<String> onChanged;\n\n  const PlayerNameField({\n    super.key,\n    required this.name,\n    required this.onChanged,\n  });\n\n  @override\n  State<PlayerNameField> createState() => _PlayerNameFieldState();\n}\n\nclass _PlayerNameFieldState extends State<PlayerNameField> {\n  late final TextEditingController _controller;\n\n  @override\n  void initState() {\n    super.initState();\n    _controller = TextEditingController(text: widget.name);\n  }\n\n  @override\n  void didUpdateWidget(covariant PlayerNameField oldWidget) {\n    super.didUpdateWidget(oldWidget);\n    if (oldWidget.name != widget.name && _controller.text != widget.name) {\n      _controller.text = widget.name;\n    }\n  }\n\n  @override\n  void dispose() {\n    _controller.dispose();\n    super.dispose();\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    return TextFormField(\n      controller: _controller,\n      textAlign: TextAlign.center,\n      decoration: const InputDecoration(\n        isDense: true,\n        contentPadding: EdgeInsets.symmetric(\n          vertical: 6,\n          horizontal: 8,\n        ),\n        border: OutlineInputBorder(),\n      ),\n      style: const TextStyle(fontWeight: FontWeight.bold),\n      onChanged: widget.onChanged,\n      onTap: () {\n        _controller.selection = TextSelection(\n          baseOffset: 0,\n          extentOffset: _controller.text.length,\n        );\n      },\n    );\n  }\n}\n",
+              "resource": {
+                "$mid": 1,
+                "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/player_name_field.dart",
+                "scheme": "file"
+              },
+              "language": "dart",
+              "markdownBeforeBlock": ""
+            },
+            {
+              "code": "import 'player_name_field.dart';\n// ...existing code...\nDataCell(\n  Column(\n    crossAxisAlignment: CrossAxisAlignment.start,\n    children: [\n      SizedBox(\n        width: 120,\n        child: PlayerNameField(\n          name: player.name,\n          onChanged: (val) {\n            ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);\n          },\n        ),\n      ),\n      Container(\n        width: 120,\n        margin: const EdgeInsets.only(top: 1),\n        padding: const EdgeInsets.symmetric(\n          vertical: 2,\n          horizontal: 8,\n        ),\n        decoration: BoxDecoration(\n          border: Border.all(color: Colors.grey),\n          borderRadius: BorderRadius.circular(4),\n        ),\n        child: Text(\n          '${player.totalScore}',\n          style: const TextStyle(fontWeight: FontWeight.bold),\n          textAlign: TextAlign.center,\n        ),\n      ),\n    ],\n  ),\n),\n// ...existing code...\n",
+              "resource": {
+                "$mid": 1,
+                "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+                "scheme": "file"
+              },
+              "language": "dart",
+              "markdownBeforeBlock": "\n**Now update your  to use this new widget:**\n\n"
+            }
+          ],
+          "messages": [
+            {
+              "role": "user",
+              "content": "Move the name entry text fields and their associated nameControllers TextEditingController to their own PlanerNameField class"
+            },
+            {
+              "role": "assistant",
+              "content": "````dart\n// filepath: c:\\Users\\joe\\Documents\\GitHub\\freemansoft\\phase_10\\phase_10_app\\lib\\player_name_field.dart\nimport 'package:flutter/material.dart';\n\nclass PlayerNameField extends StatefulWidget {\n  final String name;\n  final ValueChanged<String> onChanged;\n\n  const PlayerNameField({\n    super.key,\n    required this.name,\n    required this.onChanged,\n  });\n\n  @override\n  State<PlayerNameField> createState() => _PlayerNameFieldState();\n}\n\nclass _PlayerNameFieldState extends State<PlayerNameField> {\n  late final TextEditingController _controller;\n\n  @override\n  void initState() {\n    super.initState();\n    _controller = TextEditingController(text: widget.name);\n  }\n\n  @override\n  void didUpdateWidget(covariant PlayerNameField oldWidget) {\n    super.didUpdateWidget(oldWidget);\n    if (oldWidget.name != widget.name && _controller.text != widget.name) {\n      _controller.text = widget.name;\n    }\n  }\n\n  @override\n  void dispose() {\n    _controller.dispose();\n    super.dispose();\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    return TextFormField(\n      controller: _controller,\n      textAlign: TextAlign.center,\n      decoration: const InputDecoration(\n        isDense: true,\n        contentPadding: EdgeInsets.symmetric(\n          vertical: 6,\n          horizontal: 8,\n        ),\n        border: OutlineInputBorder(),\n      ),\n      style: const TextStyle(fontWeight: FontWeight.bold),\n      onChanged: widget.onChanged,\n      onTap: () {\n        _controller.selection = TextSelection(\n          baseOffset: 0,\n          extentOffset: _controller.text.length,\n        );\n      },\n    );\n  }\n}\n````\n\n**Now update your `score_table.dart` to use this new widget:**\n\n````dart\n// filepath: c:\\Users\\joe\\Documents\\GitHub\\freemansoft\\phase_10\\phase_10_app\\lib\\score_table.dart\nimport 'player_name_field.dart';\n// ...existing code...\nDataCell(\n  Column(\n    crossAxisAlignment: CrossAxisAlignment.start,\n    children: [\n      SizedBox(\n        width: 120,\n        child: PlayerNameField(\n          name: player.name,\n          onChanged: (val) {\n            ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);\n          },\n        ),\n      ),\n      Container(\n        width: 120,\n        margin: const EdgeInsets.only(top: 1),\n        padding: const EdgeInsets.symmetric(\n          vertical: 2,\n          horizontal: 8,\n        ),\n        decoration: BoxDecoration(\n          border: Border.all(color: Colors.grey),\n          borderRadius: BorderRadius.circular(4),\n        ),\n        child: Text(\n          '${player.totalScore}',\n          style: const TextStyle(fontWeight: FontWeight.bold),\n          textAlign: TextAlign.center,\n        ),\n      ),\n    ],\n  ),\n),\n// ...existing code...\n````\n\nThis moves the name entry field and its controller logic into a reusable `PlayerNameField` widget."
+            }
+          ],
+          "modelMessageId": "7dde82f6-d771-4058-a59e-8cb5774b65c8",
+          "responseId": "d50035d8-6198-4233-a38d-8b8cabd53575",
+          "sessionId": "508b170e-d1a7-4338-978c-812359e61049",
+          "agentId": "github.copilot.default"
+        }
+      },
+      "followups": [],
+      "isCanceled": false,
+      "agent": {
+        "extensionId": {
+          "value": "GitHub.copilot-chat",
+          "_lower": "github.copilot-chat"
+        },
+        "publisherDisplayName": "GitHub",
+        "extensionPublisherId": "GitHub",
+        "extensionDisplayName": "GitHub Copilot Chat",
+        "id": "github.copilot.default",
+        "description": "Ask Copilot",
+        "metadata": {
+          "themeIcon": {
+            "id": "copilot"
+          },
+          "hasFollowups": true,
+          "helpTextPrefix": "You can ask me general programming questions, or chat with the following participants which have specialized expertise and can perform actions:",
+          "helpTextVariablesPrefix": "You can also help me understand your question by using the following variables to give me extra context:",
+          "helpTextPostfix": {
+            "value": "To have a great conversation, ask me questions as if I was a real programmer:\n\n* **Show me the code** you want to talk about by having the files open and selecting the most important lines.\n* **Make refinements** by asking me follow-up questions, adding clarifications, providing errors, etc.\n* **Review my suggested code** and tell me about issues or improvements, so I can iterate on it.\n\nYou can also ask me questions about your editor selection by [starting an inline chat session](command:inlineChat.start).\n\nLearn more about [GitHub Copilot](https://docs.github.com/copilot/using-github-copilot/getting-started-with-github-copilot?tool=vscode&utm_source=editor&utm_medium=chat-panel&utm_campaign=2024q3-em-MSFT-getstarted) in [Visual Studio Code](https://code.visualstudio.com/docs/copilot/overview). Or explore the [Copilot walkthrough](command:github.copilot.open.walkthrough).",
+            "isTrusted": {
+              "enabledCommands": [
+                "inlineChat.start",
+                "github.copilot.open.walkthrough"
+              ]
+            },
+            "supportThemeIcons": false,
+            "supportHtml": false,
+            "uris": {
+              "command:inlineChat.start": {
+                "$mid": 1,
+                "path": "inlineChat.start",
+                "scheme": "command"
+              },
+              "https://docs.github.com/copilot/using-github-copilot/getting-started-with-github-copilot?tool=vscode&utm_source=editor&utm_medium=chat-panel&utm_campaign=2024q3-em-MSFT-getstarted": {
+                "$mid": 1,
+                "path": "/copilot/using-github-copilot/getting-started-with-github-copilot",
+                "scheme": "https",
+                "authority": "docs.github.com",
+                "query": "tool=vscode&utm_source=editor&utm_medium=chat-panel&utm_campaign=2024q3-em-MSFT-getstarted"
+              },
+              "https://code.visualstudio.com/docs/copilot/overview": {
+                "$mid": 1,
+                "path": "/docs/copilot/overview",
+                "scheme": "https",
+                "authority": "code.visualstudio.com"
+              },
+              "command:github.copilot.open.walkthrough": {
+                "$mid": 1,
+                "path": "github.copilot.open.walkthrough",
+                "scheme": "command"
+              }
+            }
+          },
+          "supportIssueReporting": false,
+          "welcomeMessageContent": {
+            "icon": {
+              "id": "copilot-large"
+            },
+            "title": "Ask Copilot",
+            "message": {
+              "value": "Copilot is powered by AI, so mistakes are possible. Review output carefully before use.",
+              "supportThemeIcons": false,
+              "supportHtml": false,
+              "uris": {}
+            }
+          },
+          "requester": {
+            "name": "freemansoft",
+            "icon": {
+              "$mid": 1,
+              "path": "/u/1217160",
+              "scheme": "https",
+              "authority": "avatars.githubusercontent.com",
+              "query": "v=4"
+            }
+          }
+        },
+        "name": "GitHubCopilot",
+        "fullName": "GitHub Copilot",
+        "isDefault": true,
+        "locations": [
+          "panel"
+        ],
+        "slashCommands": [],
+        "disambiguation": [
+          {
+            "category": "generate_code_sample",
+            "description": "The user wants to generate code snippets without referencing the contents of the current workspace. This category does not include generating entire projects.",
+            "examples": [
+              "Write an example of computing a SHA256 hash."
+            ]
+          },
+          {
+            "category": "add_feature_to_file",
+            "description": "The user wants to change code in a file that is provided in their request, without referencing the contents of the current workspace. This category does not include generating entire projects.",
+            "examples": [
+              "Add a refresh button to the table widget."
+            ]
+          },
+          {
+            "category": "question_about_specific_files",
+            "description": "The user has a question about a specific file or code snippet that they have provided as part of their query, and the question does not require additional workspace context to answer.",
+            "examples": [
+              "What does this file do?"
+            ]
+          }
+        ]
+      },
+      "contentReferences": [
+        {
+          "kind": "reference",
+          "reference": {
+            "$mid": 1,
+            "fsPath": "c:\\Users\\joe\\Documents\\GitHub\\freemansoft\\phase_10\\phase_10_app\\lib\\score_table.dart",
+            "_sep": 1,
+            "external": "file:///c%3A/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+            "path": "/C:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+            "scheme": "file"
+          }
+        }
+      ],
+      "codeCitations": [],
+      "timestamp": 1745930582869
+    },
+    {
+      "requestId": "request_bfe93ac0-c7db-4621-9d62-786fbdcd1a36",
+      "message": {
+        "parts": [
+          {
+            "range": {
+              "start": 0,
+              "endExclusive": 59
+            },
+            "editorRange": {
+              "startLineNumber": 1,
+              "startColumn": 1,
+              "endLineNumber": 1,
+              "endColumn": 60
+            },
+            "text": "remove the unneedd _name_controllers from scores_table.dart",
+            "kind": "text"
+          }
+        ],
+        "text": "remove the unneedd _name_controllers from scores_table.dart"
+      },
+      "variableData": {
+        "variables": [
+          {
+            "id": "vscode.implicit.selection",
+            "name": "file:score_table.dart",
+            "value": {
+              "uri": {
+                "$mid": 1,
+                "fsPath": "c:\\Users\\joe\\Documents\\GitHub\\freemansoft\\phase_10\\phase_10_app\\lib\\score_table.dart",
+                "_sep": 1,
+                "external": "file:///c%3A/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+                "path": "/C:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+                "scheme": "file"
+              },
+              "range": {
+                "startLineNumber": 67,
+                "startColumn": 32,
+                "endLineNumber": 67,
+                "endColumn": 48,
+                "selectionStartLineNumber": 67,
+                "selectionStartColumn": 32,
+                "positionLineNumber": 67,
+                "positionColumn": 48
+              }
+            },
+            "isFile": true,
+            "modelDescription": "User's active selection"
+          }
+        ]
+      },
+      "response": [
+        {
+          "value": "````dart\n",
+          "supportThemeIcons": false,
+          "supportHtml": false,
+          "baseUri": {
+            "$mid": 1,
+            "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/",
+            "scheme": "file"
+          },
+          "uris": {}
+        },
+        {
+          "kind": "codeblockUri",
+          "uri": {
+            "$mid": 1,
+            "external": "file:///c%3A/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+            "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+            "scheme": "file"
+          }
+        },
+        {
+          "value": "// ...existing code...\nclass _ScoreTableState extends ConsumerState<ScoreTable> {\n  // Removed: final Map<int, TextEditingController> _nameControllers = {};\n\n  @override\n  void dispose() {\n    // Removed: for (final controller in _nameControllers.values) { controller.dispose(); }\n    super.dispose();\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    final players = ref.watch(playersProvider);\n\n    // Removed: name controller sync logic\n\n    return DataTable2(\n      columnSpacing: 12,\n      horizontalMargin: 12,\n      minWidth: 1200,\n      fixedLeftColumns: 1,\n      fixedTopRows: 1,\n      isHorizontalScrollBarVisible: true,\n      isVerticalScrollBarVisible: true,\n      dataRowHeight: 74,\n      columns: [\n        const DataColumn2(\n          label: Text('Player / Total'),\n          size: ColumnSize.L,\n          fixedWidth: 100,\n        ),\n        ...List.generate(\n          12,\n          (round) => DataColumn2(\n            label: Text('Round ${round + 1}'),\n            size: ColumnSize.S,\n          ),\n        ),\n      ],\n      rows: List<DataRow2>.generate(players.length, (playerIdx) {\n        final player = players[playerIdx];\n        final isEven = playerIdx % 2 == 0;\n\n        return DataRow2(\n          color: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {\n            return isEven\n                ? Colors.red.withAlpha(20)\n                : Colors.blue.withAlpha(20);\n          }),\n          cells: [\n            DataCell(\n              Column(\n                crossAxisAlignment: CrossAxisAlignment.start,\n                children: [\n                  SizedBox(\n                    width: 120,\n                    child: PlayerNameField(\n                      name: player.name,\n                      onChanged: (val) {\n                        ref\n                            .read(playersProvider.notifier)\n                            .updatePlayerName(playerIdx, val);\n                      },\n                    ),\n                  ),\n                  Container(\n                    width: 120,\n                    margin: const EdgeInsets.only(top: 1),\n                    padding: const EdgeInsets.symmetric(\n                      vertical: 2,\n                      horizontal: 8,\n                    ),\n                    decoration: BoxDecoration(\n                      border: Border.all(color: Colors.grey),\n                      borderRadius: BorderRadius.circular(4),\n                    ),\n                    child: Text(\n                      '${player.totalScore}',\n                      style: const TextStyle(fontWeight: FontWeight.bold),\n                      textAlign: TextAlign.center,\n                    ),\n                  ),\n                ],\n              ),\n            ),\n            ...List<DataCell>.generate(12, (round) {\n              final phase = player.phases.getPhase(round);\n              final score = player.scores.getScore(round);\n              return DataCell(\n                SizedBox(\n                  width: 90,\n                  child: Column(\n                    children: [\n                      DropdownButtonFormField<int?>(\n                        value: phase,\n                        isExpanded: true,\n                        hint: const Text('Phase'),\n                        items: [\n                          const DropdownMenuItem<int?>(\n                            value: null,\n                            child: Text('None'),\n                          ),\n                          ...List.generate(\n                            10,\n                            (i) => DropdownMenuItem<int?>(\n                              value: i + 1,\n                              child: Text('${i + 1}'),\n                            ),\n                          ),\n                        ],\n                        onChanged: (val) {\n                          ref\n                              .read(playersProvider.notifier)\n                              .updatePhase(playerIdx, round, val);\n\n                          // Show a 10 second alert with all completed phases\n                          final completedPhases =\n                              player.phases.completedPhasesList();\n                          if (completedPhases.isNotEmpty) {\n                            final snackBar = SnackBar(\n                              content: Text(\n                                '${player.name}: ${completedPhases.join(', ')}',\n                              ),\n                              duration: const Duration(seconds: 10),\n                            );\n                            ScaffoldMessenger.of(\n                              context,\n                            ).showSnackBar(snackBar);\n                          }\n                        },\n                        decoration: const InputDecoration(\n                          isDense: true,\n                          contentPadding: EdgeInsets.symmetric(\n                            vertical: 6,\n                            horizontal: 8,\n                          ),\n                          border: OutlineInputBorder(),\n                        ),\n                      ),\n                      RoundScoreField(\n                        score: score,\n                        onChanged: (parsed) {\n                          ref\n                              .read(playersProvider.notifier)\n                              .updateScore(playerIdx, round, parsed);\n                        },\n                      ),\n                    ],\n                  ),\n                ),\n              );\n            }),\n          ],\n        );\n      }),\n    );\n  }\n}\n// ...existing code...\n````",
+          "supportThemeIcons": false,
+          "supportHtml": false,
+          "baseUri": {
+            "$mid": 1,
+            "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/",
+            "scheme": "file"
+          }
+        }
+      ],
+      "responseId": "response_8f8a9dd4-f4ed-4ec2-b516-07edc6ed3d94",
+      "result": {
+        "timings": {
+          "firstProgress": 3421,
+          "totalElapsed": 17081
+        },
+        "metadata": {
+          "codeBlocks": [
+            {
+              "code": "// ...existing code...\nclass _ScoreTableState extends ConsumerState<ScoreTable> {\n  // Removed: final Map<int, TextEditingController> _nameControllers = {};\n\n  @override\n  void dispose() {\n    // Removed: for (final controller in _nameControllers.values) { controller.dispose(); }\n    super.dispose();\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    final players = ref.watch(playersProvider);\n\n    // Removed: name controller sync logic\n\n    return DataTable2(\n      columnSpacing: 12,\n      horizontalMargin: 12,\n      minWidth: 1200,\n      fixedLeftColumns: 1,\n      fixedTopRows: 1,\n      isHorizontalScrollBarVisible: true,\n      isVerticalScrollBarVisible: true,\n      dataRowHeight: 74,\n      columns: [\n        const DataColumn2(\n          label: Text('Player / Total'),\n          size: ColumnSize.L,\n          fixedWidth: 100,\n        ),\n        ...List.generate(\n          12,\n          (round) => DataColumn2(\n            label: Text('Round ${round + 1}'),\n            size: ColumnSize.S,\n          ),\n        ),\n      ],\n      rows: List<DataRow2>.generate(players.length, (playerIdx) {\n        final player = players[playerIdx];\n        final isEven = playerIdx % 2 == 0;\n\n        return DataRow2(\n          color: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {\n            return isEven\n                ? Colors.red.withAlpha(20)\n                : Colors.blue.withAlpha(20);\n          }),\n          cells: [\n            DataCell(\n              Column(\n                crossAxisAlignment: CrossAxisAlignment.start,\n                children: [\n                  SizedBox(\n                    width: 120,\n                    child: PlayerNameField(\n                      name: player.name,\n                      onChanged: (val) {\n                        ref\n                            .read(playersProvider.notifier)\n                            .updatePlayerName(playerIdx, val);\n                      },\n                    ),\n                  ),\n                  Container(\n                    width: 120,\n                    margin: const EdgeInsets.only(top: 1),\n                    padding: const EdgeInsets.symmetric(\n                      vertical: 2,\n                      horizontal: 8,\n                    ),\n                    decoration: BoxDecoration(\n                      border: Border.all(color: Colors.grey),\n                      borderRadius: BorderRadius.circular(4),\n                    ),\n                    child: Text(\n                      '${player.totalScore}',\n                      style: const TextStyle(fontWeight: FontWeight.bold),\n                      textAlign: TextAlign.center,\n                    ),\n                  ),\n                ],\n              ),\n            ),\n            ...List<DataCell>.generate(12, (round) {\n              final phase = player.phases.getPhase(round);\n              final score = player.scores.getScore(round);\n              return DataCell(\n                SizedBox(\n                  width: 90,\n                  child: Column(\n                    children: [\n                      DropdownButtonFormField<int?>(\n                        value: phase,\n                        isExpanded: true,\n                        hint: const Text('Phase'),\n                        items: [\n                          const DropdownMenuItem<int?>(\n                            value: null,\n                            child: Text('None'),\n                          ),\n                          ...List.generate(\n                            10,\n                            (i) => DropdownMenuItem<int?>(\n                              value: i + 1,\n                              child: Text('${i + 1}'),\n                            ),\n                          ),\n                        ],\n                        onChanged: (val) {\n                          ref\n                              .read(playersProvider.notifier)\n                              .updatePhase(playerIdx, round, val);\n\n                          // Show a 10 second alert with all completed phases\n                          final completedPhases =\n                              player.phases.completedPhasesList();\n                          if (completedPhases.isNotEmpty) {\n                            final snackBar = SnackBar(\n                              content: Text(\n                                '${player.name}: ${completedPhases.join(', ')}',\n                              ),\n                              duration: const Duration(seconds: 10),\n                            );\n                            ScaffoldMessenger.of(\n                              context,\n                            ).showSnackBar(snackBar);\n                          }\n                        },\n                        decoration: const InputDecoration(\n                          isDense: true,\n                          contentPadding: EdgeInsets.symmetric(\n                            vertical: 6,\n                            horizontal: 8,\n                          ),\n                          border: OutlineInputBorder(),\n                        ),\n                      ),\n                      RoundScoreField(\n                        score: score,\n                        onChanged: (parsed) {\n                          ref\n                              .read(playersProvider.notifier)\n                              .updateScore(playerIdx, round, parsed);\n                        },\n                      ),\n                    ],\n                  ),\n                ),\n              );\n            }),\n          ],\n        );\n      }),\n    );\n  }\n}\n// ...existing code...\n",
+              "resource": {
+                "$mid": 1,
+                "path": "/c:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+                "scheme": "file"
+              },
+              "language": "dart",
+              "markdownBeforeBlock": ""
+            }
+          ],
+          "messages": [
+            {
+              "role": "user",
+              "content": "remove the unneedd _name_controllers from scores_table.dart"
+            },
+            {
+              "role": "assistant",
+              "content": "````dart\n// filepath: c:\\Users\\joe\\Documents\\GitHub\\freemansoft\\phase_10\\phase_10_app\\lib\\score_table.dart\n// ...existing code...\nclass _ScoreTableState extends ConsumerState<ScoreTable> {\n  // Removed: final Map<int, TextEditingController> _nameControllers = {};\n\n  @override\n  void dispose() {\n    // Removed: for (final controller in _nameControllers.values) { controller.dispose(); }\n    super.dispose();\n  }\n\n  @override\n  Widget build(BuildContext context) {\n    final players = ref.watch(playersProvider);\n\n    // Removed: name controller sync logic\n\n    return DataTable2(\n      columnSpacing: 12,\n      horizontalMargin: 12,\n      minWidth: 1200,\n      fixedLeftColumns: 1,\n      fixedTopRows: 1,\n      isHorizontalScrollBarVisible: true,\n      isVerticalScrollBarVisible: true,\n      dataRowHeight: 74,\n      columns: [\n        const DataColumn2(\n          label: Text('Player / Total'),\n          size: ColumnSize.L,\n          fixedWidth: 100,\n        ),\n        ...List.generate(\n          12,\n          (round) => DataColumn2(\n            label: Text('Round ${round + 1}'),\n            size: ColumnSize.S,\n          ),\n        ),\n      ],\n      rows: List<DataRow2>.generate(players.length, (playerIdx) {\n        final player = players[playerIdx];\n        final isEven = playerIdx % 2 == 0;\n\n        return DataRow2(\n          color: WidgetStateProperty.resolveWith<Color?>((Set<WidgetState> states) {\n            return isEven\n                ? Colors.red.withAlpha(20)\n                : Colors.blue.withAlpha(20);\n          }),\n          cells: [\n            DataCell(\n              Column(\n                crossAxisAlignment: CrossAxisAlignment.start,\n                children: [\n                  SizedBox(\n                    width: 120,\n                    child: PlayerNameField(\n                      name: player.name,\n                      onChanged: (val) {\n                        ref\n                            .read(playersProvider.notifier)\n                            .updatePlayerName(playerIdx, val);\n                      },\n                    ),\n                  ),\n                  Container(\n                    width: 120,\n                    margin: const EdgeInsets.only(top: 1),\n                    padding: const EdgeInsets.symmetric(\n                      vertical: 2,\n                      horizontal: 8,\n                    ),\n                    decoration: BoxDecoration(\n                      border: Border.all(color: Colors.grey),\n                      borderRadius: BorderRadius.circular(4),\n                    ),\n                    child: Text(\n                      '${player.totalScore}',\n                      style: const TextStyle(fontWeight: FontWeight.bold),\n                      textAlign: TextAlign.center,\n                    ),\n                  ),\n                ],\n              ),\n            ),\n            ...List<DataCell>.generate(12, (round) {\n              final phase = player.phases.getPhase(round);\n              final score = player.scores.getScore(round);\n              return DataCell(\n                SizedBox(\n                  width: 90,\n                  child: Column(\n                    children: [\n                      DropdownButtonFormField<int?>(\n                        value: phase,\n                        isExpanded: true,\n                        hint: const Text('Phase'),\n                        items: [\n                          const DropdownMenuItem<int?>(\n                            value: null,\n                            child: Text('None'),\n                          ),\n                          ...List.generate(\n                            10,\n                            (i) => DropdownMenuItem<int?>(\n                              value: i + 1,\n                              child: Text('${i + 1}'),\n                            ),\n                          ),\n                        ],\n                        onChanged: (val) {\n                          ref\n                              .read(playersProvider.notifier)\n                              .updatePhase(playerIdx, round, val);\n\n                          // Show a 10 second alert with all completed phases\n                          final completedPhases =\n                              player.phases.completedPhasesList();\n                          if (completedPhases.isNotEmpty) {\n                            final snackBar = SnackBar(\n                              content: Text(\n                                '${player.name}: ${completedPhases.join(', ')}',\n                              ),\n                              duration: const Duration(seconds: 10),\n                            );\n                            ScaffoldMessenger.of(\n                              context,\n                            ).showSnackBar(snackBar);\n                          }\n                        },\n                        decoration: const InputDecoration(\n                          isDense: true,\n                          contentPadding: EdgeInsets.symmetric(\n                            vertical: 6,\n                            horizontal: 8,\n                          ),\n                          border: OutlineInputBorder(),\n                        ),\n                      ),\n                      RoundScoreField(\n                        score: score,\n                        onChanged: (parsed) {\n                          ref\n                              .read(playersProvider.notifier)\n                              .updateScore(playerIdx, round, parsed);\n                        },\n                      ),\n                    ],\n                  ),\n                ),\n              );\n            }),\n          ],\n        );\n      }),\n    );\n  }\n}\n// ...existing code...\n````"
+            }
+          ],
+          "modelMessageId": "34a92dfb-cc5d-4b5a-b00a-1242ba69ab9c",
+          "responseId": "e3b9b816-4631-49cc-aab6-0ef65ce7a704",
+          "sessionId": "508b170e-d1a7-4338-978c-812359e61049",
+          "agentId": "github.copilot.default"
+        }
+      },
+      "followups": [],
+      "isCanceled": false,
+      "agent": {
+        "extensionId": {
+          "value": "GitHub.copilot-chat",
+          "_lower": "github.copilot-chat"
+        },
+        "publisherDisplayName": "GitHub",
+        "extensionPublisherId": "GitHub",
+        "extensionDisplayName": "GitHub Copilot Chat",
+        "id": "github.copilot.default",
+        "description": "Ask Copilot",
+        "metadata": {
+          "themeIcon": {
+            "id": "copilot"
+          },
+          "hasFollowups": true,
+          "helpTextPrefix": "You can ask me general programming questions, or chat with the following participants which have specialized expertise and can perform actions:",
+          "helpTextVariablesPrefix": "You can also help me understand your question by using the following variables to give me extra context:",
+          "helpTextPostfix": {
+            "value": "To have a great conversation, ask me questions as if I was a real programmer:\n\n* **Show me the code** you want to talk about by having the files open and selecting the most important lines.\n* **Make refinements** by asking me follow-up questions, adding clarifications, providing errors, etc.\n* **Review my suggested code** and tell me about issues or improvements, so I can iterate on it.\n\nYou can also ask me questions about your editor selection by [starting an inline chat session](command:inlineChat.start).\n\nLearn more about [GitHub Copilot](https://docs.github.com/copilot/using-github-copilot/getting-started-with-github-copilot?tool=vscode&utm_source=editor&utm_medium=chat-panel&utm_campaign=2024q3-em-MSFT-getstarted) in [Visual Studio Code](https://code.visualstudio.com/docs/copilot/overview). Or explore the [Copilot walkthrough](command:github.copilot.open.walkthrough).",
+            "isTrusted": {
+              "enabledCommands": [
+                "inlineChat.start",
+                "github.copilot.open.walkthrough"
+              ]
+            },
+            "supportThemeIcons": false,
+            "supportHtml": false,
+            "uris": {
+              "command:inlineChat.start": {
+                "$mid": 1,
+                "path": "inlineChat.start",
+                "scheme": "command"
+              },
+              "https://docs.github.com/copilot/using-github-copilot/getting-started-with-github-copilot?tool=vscode&utm_source=editor&utm_medium=chat-panel&utm_campaign=2024q3-em-MSFT-getstarted": {
+                "$mid": 1,
+                "path": "/copilot/using-github-copilot/getting-started-with-github-copilot",
+                "scheme": "https",
+                "authority": "docs.github.com",
+                "query": "tool=vscode&utm_source=editor&utm_medium=chat-panel&utm_campaign=2024q3-em-MSFT-getstarted"
+              },
+              "https://code.visualstudio.com/docs/copilot/overview": {
+                "$mid": 1,
+                "path": "/docs/copilot/overview",
+                "scheme": "https",
+                "authority": "code.visualstudio.com"
+              },
+              "command:github.copilot.open.walkthrough": {
+                "$mid": 1,
+                "path": "github.copilot.open.walkthrough",
+                "scheme": "command"
+              }
+            }
+          },
+          "supportIssueReporting": false,
+          "welcomeMessageContent": {
+            "icon": {
+              "id": "copilot-large"
+            },
+            "title": "Ask Copilot",
+            "message": {
+              "value": "Copilot is powered by AI, so mistakes are possible. Review output carefully before use.",
+              "supportThemeIcons": false,
+              "supportHtml": false,
+              "uris": {}
+            }
+          },
+          "requester": {
+            "name": "freemansoft",
+            "icon": {
+              "$mid": 1,
+              "path": "/u/1217160",
+              "scheme": "https",
+              "authority": "avatars.githubusercontent.com",
+              "query": "v=4"
+            }
+          }
+        },
+        "name": "GitHubCopilot",
+        "fullName": "GitHub Copilot",
+        "isDefault": true,
+        "locations": [
+          "panel"
+        ],
+        "slashCommands": [],
+        "disambiguation": [
+          {
+            "category": "generate_code_sample",
+            "description": "The user wants to generate code snippets without referencing the contents of the current workspace. This category does not include generating entire projects.",
+            "examples": [
+              "Write an example of computing a SHA256 hash."
+            ]
+          },
+          {
+            "category": "add_feature_to_file",
+            "description": "The user wants to change code in a file that is provided in their request, without referencing the contents of the current workspace. This category does not include generating entire projects.",
+            "examples": [
+              "Add a refresh button to the table widget."
+            ]
+          },
+          {
+            "category": "question_about_specific_files",
+            "description": "The user has a question about a specific file or code snippet that they have provided as part of their query, and the question does not require additional workspace context to answer.",
+            "examples": [
+              "What does this file do?"
+            ]
+          }
+        ]
+      },
+      "contentReferences": [
+        {
+          "kind": "reference",
+          "reference": {
+            "$mid": 1,
+            "fsPath": "c:\\Users\\joe\\Documents\\GitHub\\freemansoft\\phase_10\\phase_10_app\\lib\\score_table.dart",
+            "_sep": 1,
+            "external": "file:///c%3A/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+            "path": "/C:/Users/joe/Documents/GitHub/freemansoft/phase_10/phase_10_app/lib/score_table.dart",
+            "scheme": "file"
+          }
+        }
+      ],
+      "codeCitations": [],
+      "timestamp": 1745930793223
     }
   ]
 }
