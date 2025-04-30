@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'app_bar.dart';
-import 'score_table.dart';
+import 'package:phase_10_app/app_bar.dart';
+import 'package:phase_10_app/score_table.dart';
 
 class Phase10App extends ConsumerStatefulWidget {
   const Phase10App({super.key});

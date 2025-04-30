@@ -1,5 +1,5 @@
-import 'scores.dart';
-import 'phases.dart';
+import 'package:phase_10_app/scores.dart';
+import 'package:phase_10_app/phases.dart';
 
 class Player {
   final String name;
