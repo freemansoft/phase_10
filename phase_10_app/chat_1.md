@@ -2267,3 +2267,88 @@ DataCell(
 ````
 
 > If you want both the player name and total score in the same `SizedBox` but without a `Column`, you can combine them in a `Row` or customize `PlayerNameField` to display both. If you want only the name, use the above. If you want both, let me know how you want them arranged!
+
+freemansoft: change the opacity of rows from 20 to 60
+
+GitHub Copilot: ````dart
+// ...existing code...
+return DataRow2(
+  color: WidgetStateProperty.resolveWith<Color?>(
+    (Set<WidgetState> states) {
+      final colorScheme = Theme.of(context).colorScheme;
+      return isEven
+          ? colorScheme.primary.withAlpha(60)
+          : colorScheme.tertiary.withAlpha(60);
+    },
+  ),
+  cells: [
+// ...existing code...
+````
+
+freemansoft: remove the save to google sheets functionality
+
+GitHub Copilot: ````dart
+// ...existing code...
+class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
+  Phase10AppBar({Key? key}) : super(key: key);
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(themeProvider);
+    return AppBar(
+      title: const Text('Phase-10 Scoreboard'),
+      actions: [
+        // Removed: Save to Google Sheets button
+        IconButton(
+          icon: const Icon(Icons.refresh),
+          tooltip: 'New Game',
+          onPressed: () async {
+            final result = await showDialog<bool>(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Start New Game?'),
+                content: const Text('Are you sure you want to start a new game? All scores and phases will be reset.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: const Text('New Game'),
+                  ),
+                ],
+              ),
+            );
+            if (result == true) {
+              ref.read(playersProvider.notifier).resetGame();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Game reset!'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            }
+          },
+        ),
+        Row(
+          children: [
+            const Icon(Icons.light_mode),
+            Switch(
+              value: isDark,
+              onChanged: (val) => ref.read(themeProvider.notifier).state = val,
+            ),
+            const Icon(Icons.dark_mode),
+          ],
+        ),
+      ],
+    );
+  }
+}
+// ...existing code...
+````
+
+Similar code found with 1 license type

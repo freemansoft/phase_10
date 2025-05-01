@@ -16,18 +16,7 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       title: const Text('Phase-10 Scoreboard'),
       actions: [
-        IconButton(
-          icon: const Icon(Icons.save),
-          tooltip: 'Save to Google Sheets',
-          onPressed: () {
-            // TODO: Implement Google Sheets integration
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text('Save to Google Sheets not implemented'),
-              ),
-            );
-          },
-        ),
+        // Removed: Save to Google Sheets button
         IconButton(
           icon: const Icon(Icons.refresh),
           tooltip: 'New Game',

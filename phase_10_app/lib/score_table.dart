@@ -62,8 +62,8 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
           ) {
             final colorScheme = Theme.of(context).colorScheme;
             return isEven
-                ? colorScheme.primary.withAlpha(20)
-                : colorScheme.tertiary.withAlpha(20);
+                ? colorScheme.primary.withAlpha(60)
+                : colorScheme.tertiary.withAlpha(60);
           }),
           cells: [
             DataCell(
