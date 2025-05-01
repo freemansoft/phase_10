@@ -2219,3 +2219,51 @@ SizedBox(
 ),
 // ...existing code...
 ````
+
+freemansoft: remove the column wrapper around the sizebox holding the player name and total score
+
+GitHub Copilot: ````dart
+// ...existing code...
+DataCell(
+  SizedBox(
+    width: 120,
+    child: Column(
+      children: [
+        PlayerNameField(
+          name: player.name,
+          onChanged: (val) {
+            ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);
+          },
+        ),
+        Text(
+          '${player.totalScore}',
+          style: const TextStyle(fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    ),
+  ),
+),
+// ...existing code...
+````
+
+**Replace with:**
+
+````dart
+// ...existing code...
+DataCell(
+  SizedBox(
+    width: 120,
+    child: PlayerNameField(
+      name: player.name,
+      onChanged: (val) {
+        ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);
+      },
+      // Optionally, you can add a suffix or a widget to show the total score inside PlayerNameField if needed.
+    ),
+  ),
+),
+// ...existing code...
+````
+
+> If you want both the player name and total score in the same `SizedBox` but without a `Column`, you can combine them in a `Row` or customize `PlayerNameField` to display both. If you want only the name, use the above. If you want both, let me know how you want them arranged!

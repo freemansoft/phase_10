@@ -39,15 +39,16 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
       dataRowHeight: 74,
       columns: [
         const DataColumn2(
-          label: Text('Player / Total'),
+          label: Text('Player/Total'),
           size: ColumnSize.L,
-          fixedWidth: 100,
+          fixedWidth: 80,
         ),
         ...List.generate(
           12,
           (round) => DataColumn2(
             label: Text('Round ${round + 1}'),
             size: ColumnSize.S,
+            headingRowAlignment: MainAxisAlignment.center,
           ),
         ),
       ],
@@ -66,30 +67,25 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
           }),
           cells: [
             DataCell(
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: 120,
-                    child: Column(
-                      children: [
-                        PlayerNameField(
-                          name: player.name,
-                          onChanged: (val) {
-                            ref
-                                .read(playersProvider.notifier)
-                                .updatePlayerName(playerIdx, val);
-                          },
-                        ),
-                        Text(
-                          '${player.totalScore}',
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+              SizedBox(
+                width: 120,
+                child: Column(
+                  children: [
+                    PlayerNameField(
+                      name: player.name,
+                      onChanged: (val) {
+                        ref
+                            .read(playersProvider.notifier)
+                            .updatePlayerName(playerIdx, val);
+                      },
                     ),
-                  ),
-                ],
+                    Text(
+                      '${player.totalScore}',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
             ...List<DataCell>.generate(12, (round) {
