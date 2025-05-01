@@ -76,6 +76,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                 child: Column(
                   children: [
                     PlayerNameField(
+                      key: ValueKey('player_name_field_$playerIdx'),
                       name: player.name,
                       onChanged: (val) {
                         ref
@@ -85,6 +86,9 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                     ),
                     Text(
                       '${player.totalScore}',
+                      key: ValueKey(
+                        'player_total_score_$playerIdx',
+                      ), // Unique key for total score
                       style: const TextStyle(fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
@@ -101,6 +105,9 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                   child: Column(
                     children: [
                       DropdownButtonFormField<int?>(
+                        key: ValueKey(
+                          'phase_dropdown_p${playerIdx}_r$round',
+                        ), // Unique key for phase dropdown
                         value: phase,
                         isExpanded: true,
                         hint: const Text('Phase'),
@@ -147,6 +154,9 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                         ),
                       ),
                       RoundScoreField(
+                        key: ValueKey(
+                          'round_score_p${playerIdx}_r$round',
+                        ), // Unique key for round score field
                         score: score,
                         onChanged: (parsed) {
                           ref

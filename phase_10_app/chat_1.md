@@ -2406,21 +2406,122 @@ DropdownButtonFormField<int?>(
 // ...existing code...
 ````
 
-freemansoft: enable cell dividers in datatable2
+freemansoft: Give a unique name to the player name fiedlds and the total score fields using the widget key so that they are all unique
 
 GitHub Copilot: ````dart
 // ...existing code...
-return DataTable2(
-  // ...existing config...
-  border: TableBorder.all(
-    color: Theme.of(context).colorScheme.outline.withAlpha(40),
-    width: 1,
+DataCell(
+  SizedBox(
+    width: 120,
+    child: Column(
+      children: [
+        PlayerNameField(
+          key: ValueKey('player_name_field_$playerIdx'),
+          name: player.name,
+          onChanged: (val) {
+            ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);
+          },
+        ),
+        Text(
+          '${player.totalScore}',
+          key: ValueKey('player_total_score_$playerIdx'), // Unique key for total score
+          style: const TextStyle(fontWeight: FontWeight.bold),
+          textAlign: TextAlign.center,
+        ),
+      ],
+    ),
   ),
-  // ...existing config...
-  // columns: [...]
-  // rows: [...]
-);
+),
 // ...existing code...
 ````
 
-This enables cell dividers in `DataTable2` using the `border` property.
+This sets a unique key for each player name field and each total score field using the player index.
+
+freemansoft: Give a unique name to every round score entry field and the phase dropdown using the widget key so that they are all unique.  The key should include the player number and the round number
+
+GitHub Copilot: ````dart
+// ...existing code...
+...List<DataCell>.generate(12, (round) {
+  final phase = player.phases.getPhase(round);
+  final score = player.scores.getScore(round);
+  return DataCell(
+    SizedBox(
+      width: 90,
+      child: Column(
+        children: [
+          DropdownButtonFormField<int?>(
+            key: ValueKey('phase_dropdown_p${playerIdx}_r$round'), // Unique key for phase dropdown
+            value: phase,
+            isExpanded: true,
+            hint: const Text('Phase'),
+            items: [
+              const DropdownMenuItem<int?>(
+                value: null,
+                child: Text('None'),
+              ),
+              ...List.generate(
+                10,
+                (i) => DropdownMenuItem<int?>(
+                  value: i + 1,
+                  child: Text('${i + 1}'),
+                ),
+              ),
+            ],
+            onChanged: (val) {
+              ref
+                  .read(playersProvider.notifier)
+                  .updatePhase(playerIdx, round, val);
+
+              // Show a 10 second alert with all completed phases
+              final completedPhases =
+                  player.phases.completedPhasesList();
+              if (completedPhases.isNotEmpty) {
+                final snackBar = SnackBar(
+                  content: Text(
+                    '${player.name}: ${completedPhases.join(', ')}',
+                  ),
+                  duration: const Duration(seconds: 10),
+                );
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(snackBar);
+              }
+            },
+            decoration: const InputDecoration(
+              isDense: true,
+              contentPadding: EdgeInsets.symmetric(
+                vertical: 6,
+                horizontal: 8,
+              ),
+              border: InputBorder.none,
+            ),
+          ),
+          RoundScoreField(
+            key: ValueKey('round_score_p${playerIdx}_r$round'), // Unique key for round score field
+            score: score,
+            onChanged: (parsed) {
+              ref
+                  .read(playersProvider.notifier)
+                  .updateScore(playerIdx, round, parsed);
+            },
+          ),
+        ],
+      ),
+    ),
+  );
+}),
+// ...existing code...
+````
+
+freemansoft: set the snackbar duratin to 3 seconds
+
+GitHub Copilot: ````dart
+// ...existing code...
+final snackBar = SnackBar(
+  content: Text(
+    '${player.name}: ${completedPhases.join(', ')}',
+  ),
+  duration: const Duration(seconds: 3), // Set duration to 3 seconds
+);
+// ...existing code...
+````
