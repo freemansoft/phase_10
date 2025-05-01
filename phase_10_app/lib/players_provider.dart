@@ -23,7 +23,6 @@ class PlayersNotifier extends StateNotifier<List<Player>> {
     state = [...state];
   }
 
-  // ...existing code...
   void updatePlayerName(int playerIdx, String name) {
     final player = state[playerIdx];
     state[playerIdx] = Player(
@@ -34,5 +33,10 @@ class PlayersNotifier extends StateNotifier<List<Player>> {
     state = [...state];
   }
 
-  // ...existing code...
+  void resetGame() {
+    state = [
+      for (final player in state)
+        Player(name: player.name), // new Scores and Phases by default
+    ];
+  }
 }

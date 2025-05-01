@@ -59,9 +59,10 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
           color: WidgetStateProperty.resolveWith<Color?>((
             Set<WidgetState> states,
           ) {
+            final colorScheme = Theme.of(context).colorScheme;
             return isEven
-                ? Colors.red.withAlpha(20)
-                : Colors.blue.withAlpha(20);
+                ? colorScheme.primary.withAlpha(20)
+                : colorScheme.tertiary.withAlpha(20);
           }),
           cells: [
             DataCell(
@@ -70,30 +71,22 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                 children: [
                   SizedBox(
                     width: 120,
-                    child: PlayerNameField(
-                      name: player.name,
-                      onChanged: (val) {
-                        ref
-                            .read(playersProvider.notifier)
-                            .updatePlayerName(playerIdx, val);
-                      },
-                    ),
-                  ),
-                  Container(
-                    width: 120,
-                    margin: const EdgeInsets.only(top: 1),
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 2,
-                      horizontal: 8,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      '${player.totalScore}',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
+                    child: Column(
+                      children: [
+                        PlayerNameField(
+                          name: player.name,
+                          onChanged: (val) {
+                            ref
+                                .read(playersProvider.notifier)
+                                .updatePlayerName(playerIdx, val);
+                          },
+                        ),
+                        Text(
+                          '${player.totalScore}',
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
                 ],

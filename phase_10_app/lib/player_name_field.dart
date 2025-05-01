@@ -44,11 +44,8 @@ class _PlayerNameFieldState extends State<PlayerNameField> {
       textAlign: TextAlign.center,
       decoration: const InputDecoration(
         isDense: true,
-        contentPadding: EdgeInsets.symmetric(
-          vertical: 6,
-          horizontal: 8,
-        ),
-        border: OutlineInputBorder(),
+        contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        border: InputBorder.none,
       ),
       style: const TextStyle(fontWeight: FontWeight.bold),
       onChanged: widget.onChanged,

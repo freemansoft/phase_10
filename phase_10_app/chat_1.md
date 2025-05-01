@@ -1939,28 +1939,283 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
 // ...existing code...
 ````
 
-freemansoft: change the toast duration to 2 seconds
+freemansoft:
+Add a "new game" feature to the app that resets the round scores and phases.
+
+- Add a "new game" button to the app bar.
+- Pressing the button causes a confirmation dialog to appear asking if the user still wants a new game showing "Cancel" and "New Game"
+- Selecting "Cancel" causes the confirmatin dialog to close.
+- Selecting "New Game" causes the confirmation diaglog to close and then all of Player state will be initialized to the new game state
+- initializing the game state means erasing the scores and phases data in the player records then refreshing the display with the reset data
+
+GitHub Copilot: ````dart
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:phase_10_app/players_provider.dart';
+
+final themeProvider = StateProvider<bool>((ref) => false);
+
+class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
+  Phase10AppBar({Key? key}) : super(key: key);
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(themeProvider);
+    return AppBar(
+      title: const Text('Phase-10 Scoreboard'),
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.save),
+          tooltip: 'Save to Google Sheets',
+          onPressed: () {
+            // TODO: Implement Google Sheets integration
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Save to Google Sheets not implemented'),
+              ),
+            );
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.refresh),
+          tooltip: 'New Game',
+          onPressed: () async {
+            final result = await showDialog<bool>(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Start New Game?'),
+                content: const Text('Are you sure you want to start a new game? All scores and phases will be reset.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: const Text('New Game'),
+                  ),
+                ],
+              ),
+            );
+            if (result == true) {
+              ref.read(playersProvider.notifier).resetGame();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Game reset!'),
+                  duration: Duration(seconds: 2),
+                ),
+              );
+            }
+          },
+        ),
+        Row(
+          children: [
+            const Icon(Icons.light_mode),
+            Switch(
+              value: isDark,
+              onChanged: (val) => ref.read(themeProvider.notifier).state = val,
+            ),
+            const Icon(Icons.dark_mode),
+          ],
+        ),
+      ],
+    );
+  }
+}
+````
+
+````dart
+// ...existing code...
+class PlayersNotifier extends StateNotifier<List<Player>> {
+  PlayersNotifier()
+      : super(List.generate(8, (i) => Player(name: 'Player ${i + 1}')));
+
+  void updateScore(int playerIdx, int round, int? score) {
+    final player = state[playerIdx];
+    player.scores.setScore(round, score);
+    state = [...state];
+  }
+
+  void updatePhase(int playerIdx, int round, int? phase) {
+    final player = state[playerIdx];
+    player.phases.setPhase(round, phase);
+    state = [...state];
+  }
+
+  void updatePlayerName(int playerIdx, String name) {
+    final player = state[playerIdx];
+    state[playerIdx] = Player(
+      name: name,
+      scores: player.scores,
+      phases: player.phases,
+    );
+    state = [...state];
+  }
+
+  void resetGame() {
+    state = [
+      for (final player in state)
+        Player(name: player.name) // new Scores and Phases by default
+    ];
+  }
+}
+// ...existing code...
+````
+
+This adds a "New Game" button to the app bar, shows a confirmation dialog, and resets all scores and phases when confirmed. The UI will refresh automatically.
+
+Similar code found with 1 license type
+
+freemansoft: Change the BoxDecoration border color to be the scheme border color
 
 GitHub Copilot: ````dart
 // ...existing code...
-onChanged: (val) {
-  ref
-      .read(playersProvider.notifier)
-      .updatePhase(playerIdx, round, val);
+Container(
+  width: 120,
+  margin: const EdgeInsets.only(top: 1),
+  padding: const EdgeInsets.symmetric(
+    vertical: 2,
+    horizontal: 8,
+  ),
+  decoration: BoxDecoration(
+    border: Border.all(
+      color: Theme.of(context).colorScheme.outline, // Use scheme border color
+    ),
+    borderRadius: BorderRadius.circular(4),
+  ),
+  alignment: Alignment.center,
+  child: Text(
+    '${player.totalScore}',
+    style: const TextStyle(fontWeight: FontWeight.bold),
+    textAlign: TextAlign.center,
+  ),
+),
+// ...existing code...
+````
 
-  // Show a 2 second alert with all completed phases
-  final completedPhases = player.phases.completedPhasesList();
-  if (completedPhases.isNotEmpty) {
-    final snackBar = SnackBar(
-      content: Text(
-        '${player.name}: ${completedPhases.join(', ')}',
+freemansoft: Remove the border around the total score and the player name
+
+GitHub Copilot: ````dart
+// ...existing code...
+SizedBox(
+  width: 120,
+  child: PlayerNameField(
+    name: player.name,
+    onChanged: (val) {
+      ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);
+    },
+    // Remove border in PlayerNameField by passing a borderless decoration or updating the widget
+  ),
+),
+// ...existing code...
+Container(
+  width: 120,
+  margin: const EdgeInsets.only(top: 1),
+  padding: const EdgeInsets.symmetric(
+    vertical: 2,
+    horizontal: 8,
+  ),
+  // Removed: decoration: BoxDecoration(...),
+  alignment: Alignment.center,
+  child: Text(
+    '${player.totalScore}',
+    style: const TextStyle(fontWeight: FontWeight.bold),
+    textAlign: TextAlign.center,
+  ),
+),
+// ...existing code...
+````
+
+**Update your `PlayerNameField` widget to remove the border:**
+
+````dart
+// ...existing code...
+decoration: const InputDecoration(
+  isDense: true,
+  contentPadding: EdgeInsets.symmetric(
+    vertical: 6,
+    horizontal: 8,
+  ),
+  border: InputBorder.none, // Remove border
+),
+// ...existing code...
+````
+
+freemansoft: set the dataRowColor to be primary or secondary alternating even and odd rows and set alpha at 20
+
+GitHub Copilot: ````dart
+// ...existing code...
+return DataRow2(
+  color: MaterialStateProperty.resolveWith<Color?>(
+    (Set<MaterialState> states) {
+      final colorScheme = Theme.of(context).colorScheme;
+      return isEven
+          ? colorScheme.primary.withAlpha(20)
+          : colorScheme.secondary.withAlpha(20);
+    },
+  ),
+  cells: [
+// ...existing code...
+````
+
+freemansoft: set the dataRowColor to be primary or secondary alternating even and odd rows and set alpha at 20 using WidgetStateProperty and WidgetState
+
+GitHub Copilot: ````dart
+// ...existing code...
+return DataRow2(
+  color: WidgetStateProperty.resolveWith<Color?>(
+    (Set<WidgetState> states) {
+      final colorScheme = Theme.of(context).colorScheme;
+      return isEven
+          ? colorScheme.primary.withAlpha(20)
+          : colorScheme.secondary.withAlpha(20);
+    },
+  ),
+  cells: [
+// ...existing code...
+````
+
+freemansoft: set the dataRowColor to be primary or tertiary alternating even and odd rows and set alpha at 20 using WidgetStateProperty and WidgetState
+
+GitHub Copilot: ````dart
+// ...existing code...
+return DataRow2(
+  color: WidgetStateProperty.resolveWith<Color?>(
+    (Set<WidgetState> states) {
+      final colorScheme = Theme.of(context).colorScheme;
+      return isEven
+          ? colorScheme.primary.withAlpha(20)
+          : colorScheme.tertiary.withAlpha(20);
+    },
+  ),
+  cells: [
+// ...existing code...
+````
+
+freemansoft: Place the player total score in the same sizebox as the player name and drop the container
+
+GitHub Copilot: ````dart
+// ...existing code...
+SizedBox(
+  width: 120,
+  child: Column(
+    children: [
+      PlayerNameField(
+        name: player.name,
+        onChanged: (val) {
+          ref.read(playersProvider.notifier).updatePlayerName(playerIdx, val);
+        },
       ),
-      duration: const Duration(seconds: 2), // Changed to 2 seconds
-    );
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(snackBar);
-  }
-},
+      Text(
+        '${player.totalScore}',
+        style: const TextStyle(fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
+      ),
+    ],
+  ),
+),
 // ...existing code...
 ````
