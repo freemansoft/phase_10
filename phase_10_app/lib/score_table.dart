@@ -37,6 +37,10 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
       isHorizontalScrollBarVisible: true,
       isVerticalScrollBarVisible: true,
       dataRowHeight: 74,
+      border: TableBorder.all(
+        color: Theme.of(context).colorScheme.outline.withAlpha(100),
+        width: 1,
+      ),
       columns: [
         const DataColumn2(
           label: Text('Player/Total'),
@@ -139,7 +143,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                             vertical: 6,
                             horizontal: 8,
                           ),
-                          border: OutlineInputBorder(),
+                          border: InputBorder.none,
                         ),
                       ),
                       RoundScoreField(

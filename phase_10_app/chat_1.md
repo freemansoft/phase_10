@@ -2352,3 +2352,75 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
 ````
 
 Similar code found with 1 license type
+
+freemansoft: remove the border around the phase dropdown choice boxes
+
+GitHub Copilot: ````dart
+// ...existing code...
+DropdownButtonFormField<int?>(
+  value: phase,
+  isExpanded: true,
+  hint: const Text('Phase'),
+  items: [
+    const DropdownMenuItem<int?>(
+      value: null,
+      child: Text('None'),
+    ),
+    ...List.generate(
+      10,
+      (i) => DropdownMenuItem<int?>(
+        value: i + 1,
+        child: Text('${i + 1}'),
+      ),
+    ),
+  ],
+  onChanged: (val) {
+    ref
+        .read(playersProvider.notifier)
+        .updatePhase(playerIdx, round, val);
+
+    // Show a 10 second alert with all completed phases
+    final completedPhases =
+        player.phases.completedPhasesList();
+    if (completedPhases.isNotEmpty) {
+      final snackBar = SnackBar(
+        content: Text(
+          '${player.name}: ${completedPhases.join(', ')}',
+        ),
+        duration: const Duration(seconds: 10),
+      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(snackBar);
+    }
+  },
+  decoration: const InputDecoration(
+    isDense: true,
+    contentPadding: EdgeInsets.symmetric(
+      vertical: 6,
+      horizontal: 8,
+    ),
+    border: InputBorder.none, // <-- Remove border
+  ),
+),
+// ...existing code...
+````
+
+freemansoft: enable cell dividers in datatable2
+
+GitHub Copilot: ````dart
+// ...existing code...
+return DataTable2(
+  // ...existing config...
+  border: TableBorder.all(
+    color: Theme.of(context).colorScheme.outline.withAlpha(40),
+    width: 1,
+  ),
+  // ...existing config...
+  // columns: [...]
+  // rows: [...]
+);
+// ...existing code...
+````
+
+This enables cell dividers in `DataTable2` using the `border` property.

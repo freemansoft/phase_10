@@ -15,6 +15,16 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## Things that were hard
+
+| Issue                                                                                                      | Resolution |
+| ---------------------------------------------------------------------------------------------------------- | ---------- |
+| Column widths                                                                                              | sort of    |
+| Altnerating background colors for the header **column**                                                    | no         |
+| Highlighting the text on click and managing TextEditingController so that the text went in the right order | yes        |
+| New-Game functionality took a couple trys where I rolled back and then tried again                         | yes        |
+| Hover over a player to show their completed phases                                                         | no         |
+
 ## Prompt logs from the inital session
 
 [Chat JSON file exported from vs code.](chat_1.json).
