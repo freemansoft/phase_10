@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phase_10_app/players_provider.dart';
+import 'package:phase_10_app/provider/players_provider.dart';
 
 final themeProvider = StateProvider<bool>((ref) => false);
 

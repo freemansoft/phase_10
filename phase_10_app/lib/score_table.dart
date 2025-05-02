@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:data_table_2/data_table_2.dart';
 import 'package:phase_10_app/player_name_field.dart';
 import 'package:phase_10_app/round_score_field.dart';
-import 'package:phase_10_app/players_provider.dart';
+import 'package:phase_10_app/provider/players_provider.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
   const ScoreTable({super.key});
