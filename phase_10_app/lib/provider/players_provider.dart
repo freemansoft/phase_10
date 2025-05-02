@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phase_10_app/player.dart';
+import 'package:phase_10_app/model/player.dart';
 
 final playersProvider = StateNotifierProvider<PlayersNotifier, List<Player>>((
   ref,
