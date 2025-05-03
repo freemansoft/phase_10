@@ -31,3 +31,13 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
     );
   }
 }
+
+// Wraps Phase10App with ProviderScope for use in tests and main
+class Phase10AppBuilder extends StatelessWidget {
+  const Phase10AppBuilder({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ProviderScope(child: Phase10App());
+  }
+}
