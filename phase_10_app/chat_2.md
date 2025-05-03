@@ -1,6 +1,7 @@
 freemansoft: Move the payer, scores and phases files to a model directory
 
-GitHub Copilot: ````plaintext
+GitHub Copilot:
+````plaintext
 // Move the following files to a new directory named `model`:
 
 // Before:
@@ -21,7 +22,8 @@ import 'model/player.dart';
 
 freemansoft: Move the PlayerNotifier to the provider folder
 
-GitHub Copilot: ````plaintext
+GitHub Copilot:
+````plaintext
 // Move the file containing PlayerNotifier to the provider directory.
 
 // For example, if you have:

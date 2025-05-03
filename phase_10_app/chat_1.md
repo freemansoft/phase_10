@@ -37,7 +37,8 @@ Implement the a game scoring program for "phase 10".
 - The score table and its fields should be in a separate file from main.dart
 
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
             DataCell(
               Column(
@@ -95,7 +96,8 @@ This will make the player name editable in the table.
 
 freemansoft: add outline borders to the editable round score entry fields
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 DataCell(
   Column(
@@ -148,7 +150,8 @@ This adds an outline border to the editable round score entry fields.
 
 freemansoft: add outline border to drop lists
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 DropdownButtonFormField<int?>(
   value: phase,
@@ -189,7 +192,8 @@ This will give the dropdowns an outline border to match the score entry fields.
 
 freemansoft: set the dropdown minimum width to 70 pixels
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 SizedBox(
   width: 70, // <-- Set minimum width for dropdown
@@ -232,7 +236,8 @@ Wrap your `DropdownButtonFormField` with a `SizedBox(width: 70, ...)` to set its
 
 freemansoft: set teh data table column minimum width to 70 pixels
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 ...List.generate(
   12,
@@ -249,7 +254,8 @@ Add `minWidth: 70,` to each `DataColumn2` for the round columns to set the minim
 
 freemansoft: the drop list should aways be wide enough to show 2 digits
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 SizedBox(
   width: 70, // Ensures dropdown is wide enough for 2 digits
@@ -292,7 +298,8 @@ SizedBox(
 
 freemansoft: add an outline box to the total text
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 Container(
   margin: const EdgeInsets.only(top: 4),
@@ -310,7 +317,8 @@ Replace your `Text('Total: ${player.totalScore}')` with the above `Container` to
 
 freemansoft: alternate the background color of each row in the table
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 rows: List<DataRow2>.generate(players.length, (playerIdx) {
   final player = players[playerIdx];
@@ -332,7 +340,8 @@ This will alternate the background color of each row in the table. Even rows wil
 
 freemansoft: convert colors.red to MaterialStateProperty<Color>
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 return DataRow2(
   color: MaterialStateProperty.resolveWith<Color?>(
@@ -350,7 +359,8 @@ This change uses `MaterialStateProperty.resolveWith<Color?>` for the `color` pro
 
 freemansoft: set the light theme background color to white
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 return MaterialApp(
   title: 'Phase-10 Scoreboard',
@@ -369,7 +379,8 @@ Add or update the `scaffoldBackgroundColor: Colors.white` in your light theme in
 
 freemansoft: set the data table sizing behavior so that the drop lists are fully visible
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 return DataTable2(
   columnSpacing: 12,
@@ -407,7 +418,8 @@ This ensures the dropdowns are always fully visible in the table. Adjust `minWid
 
 freemansoft: Remove the string Total from the total score field
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 Container(
   width: 120,
@@ -430,7 +442,8 @@ Container(
 
 freemansoft: align the total score centered in the column
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 Container(
   width: 120,
@@ -455,7 +468,8 @@ Container(
 
 freemansoft: Align the player names to be centered
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 SizedBox(
   width: 120,
@@ -483,7 +497,8 @@ SizedBox(
 
 freemansoft: highlight a column when the column header is clicked on
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 class ScoreTable extends ConsumerStatefulWidget {
   const ScoreTable({super.key});
@@ -680,7 +695,8 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
 
 freemansoft: validate that each round score ends in 0 or 5 if a number has been entered
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 TextFormField(
   initialValue: score?.toString() ?? '',
@@ -721,7 +737,8 @@ This will show an error if a number is entered that does not end in 0 or 5.
 
 freemansoft: When I hover over the player name in the first column it shows an overlay that lists all the completed phases
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 DataCell(
   Column(
@@ -798,7 +815,8 @@ This will show an overlay listing all completed phases when you hover over the p
 
 freemansoft: add a hover handler over the total score field that shows the completed phases
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 Container(
   width: 120,
@@ -855,7 +873,8 @@ This wraps the total score field in a `MouseRegion` and shows an overlay with th
 
 freemansoft: add a 10 second alert that shows all the completed phases when a phase droplist has changed
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 DropdownButtonFormField<int?>(
   value: phase,
@@ -905,7 +924,8 @@ This will show a 10-second alert (SnackBar) listing all completed phases wheneve
 
 freemansoft: When I click in a name field I want the whole name to be selected
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 SizedBox(
   width: 120,
@@ -1002,7 +1022,8 @@ SizedBox(
 
 freemansoft: change the name entry text field so that all the text is selected when a user clicks in the field to edit the name
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 SizedBox(
   width: 120,
@@ -1210,7 +1231,8 @@ Let me know if you want the advanced version with persistent controllers!
 
 freemansoft: show me the advanced version with persistent controllers and stateful widgets
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -1434,7 +1456,8 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
 
 freemansoft: Move the round score text field configuration to its on class and file
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -1508,7 +1531,8 @@ import 'round_score_field.dart';
 
 freemansoft: Make the RoundScoreField highlight all the text when a user clicks in the field and make sure the text appears in the correct order as enterfd
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -1588,7 +1612,8 @@ This ensures the text is always entered in the correct order and all text is sel
 
 freemansoft: add an ontap to RoundScores so that all the text is selected when the user taps into the field
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -1666,7 +1691,8 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
 
 freemansoft: Move the name entry text fields and their associated nameControllers TextEditingController to their own PlanerNameField class
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 import 'package:flutter/material.dart';
 
 class PlayerNameField extends StatefulWidget {
@@ -1777,7 +1803,8 @@ This moves the name entry field and its controller logic into a reusable `Player
 
 freemansoft: remove the unneedd _name_controllers from scores_table.dart
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 class _ScoreTableState extends ConsumerState<ScoreTable> {
   // Removed: final Map<int, TextEditingController> _nameControllers = {};
@@ -1948,7 +1975,8 @@ Add a "new game" feature to the app that resets the round scores and phases.
 - Selecting "New Game" causes the confirmation diaglog to close and then all of Player state will be initialized to the new game state
 - initializing the game state means erasing the scores and phases data in the player records then refreshing the display with the reset data
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phase_10_app/players_provider.dart';
@@ -2071,7 +2099,8 @@ Similar code found with 1 license type
 
 freemansoft: Change the BoxDecoration border color to be the scheme border color
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 Container(
   width: 120,
@@ -2098,7 +2127,8 @@ Container(
 
 freemansoft: Remove the border around the total score and the player name
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 SizedBox(
   width: 120,
@@ -2146,7 +2176,8 @@ decoration: const InputDecoration(
 
 freemansoft: set the dataRowColor to be primary or secondary alternating even and odd rows and set alpha at 20
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 return DataRow2(
   color: MaterialStateProperty.resolveWith<Color?>(
@@ -2163,7 +2194,8 @@ return DataRow2(
 
 freemansoft: set the dataRowColor to be primary or secondary alternating even and odd rows and set alpha at 20 using WidgetStateProperty and WidgetState
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 return DataRow2(
   color: WidgetStateProperty.resolveWith<Color?>(
@@ -2180,7 +2212,8 @@ return DataRow2(
 
 freemansoft: set the dataRowColor to be primary or tertiary alternating even and odd rows and set alpha at 20 using WidgetStateProperty and WidgetState
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 return DataRow2(
   color: WidgetStateProperty.resolveWith<Color?>(
@@ -2197,7 +2230,8 @@ return DataRow2(
 
 freemansoft: Place the player total score in the same sizebox as the player name and drop the container
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 SizedBox(
   width: 120,
@@ -2222,7 +2256,8 @@ SizedBox(
 
 freemansoft: remove the column wrapper around the sizebox holding the player name and total score
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 DataCell(
   SizedBox(
@@ -2270,7 +2305,8 @@ DataCell(
 
 freemansoft: change the opacity of rows from 20 to 60
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 return DataRow2(
   color: WidgetStateProperty.resolveWith<Color?>(
@@ -2287,7 +2323,8 @@ return DataRow2(
 
 freemansoft: remove the save to google sheets functionality
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
   Phase10AppBar({Key? key}) : super(key: key);
@@ -2355,7 +2392,8 @@ Similar code found with 1 license type
 
 freemansoft: remove the border around the phase dropdown choice boxes
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 DropdownButtonFormField<int?>(
   value: phase,
@@ -2408,7 +2446,8 @@ DropdownButtonFormField<int?>(
 
 freemansoft: Give a unique name to the player name fiedlds and the total score fields using the widget key so that they are all unique
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 DataCell(
   SizedBox(
@@ -2439,7 +2478,8 @@ This sets a unique key for each player name field and each total score field usi
 
 freemansoft: Give a unique name to every round score entry field and the phase dropdown using the widget key so that they are all unique.  The key should include the player number and the round number
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 ...List<DataCell>.generate(12, (round) {
   final phase = player.phases.getPhase(round);
@@ -2515,7 +2555,8 @@ GitHub Copilot: ````dart
 
 freemansoft: set the snackbar duratin to 3 seconds
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 // ...existing code...
 final snackBar = SnackBar(
   content: Text(

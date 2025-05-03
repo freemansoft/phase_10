@@ -8,7 +8,8 @@ clicks in the first player round 2 score field and enters 15
 verifies the first player total score field holds 25
 uses the field id or key to find the field. The key includes the player number and round number in its name for the round entry fields. The key includes the player number for the total round score for a player
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:phase_10_app/app.dart';
@@ -53,7 +54,8 @@ void main() {
 
 freemansoft: Wrap phase10app in an appbuilder that includes the providerscope and remove the providerscope from main.dart
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'phase10app.dart';
@@ -92,7 +94,8 @@ freemansoft: Create a flutter widget unit test that
 - uses the field id or key to find the field. The key includes the player number and round number in its name for the round entry fields. The key includes the player number for the total round score for a player
 - fields being modified in a test are often the descendants of the widget found by id
 
-GitHub Copilot: ````dart
+GitHub Copilot:
+````dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:phase_10_app/app.dart';
