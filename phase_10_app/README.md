@@ -17,14 +17,15 @@ samples, guidance on mobile development, and a full API reference.
 
 ## Things that were hard
 
-| Issue                                                                                                      | Resolution |
-| ---------------------------------------------------------------------------------------------------------- | ---------- |
-| DataTable widths and heights                                                                               | sort of    |
-| Altnerating background colors for the header **column**                                                    | no         |
-| Highlighting the text on click and managing TextEditingController so that the text went in the right order | yes        |
-| New-Game functionality took a couple trys where I rolled back and then tried again                         | yes        |
-| Hover over a player to show their completed phases                                                         | no         |
-| For Tests: editable TextFields my classes actually wrap  `TextFormField` which what you need to type into  | Yes        |
+| Issue                                                                                                         | Resolution |
+| ------------------------------------------------------------------------------------------------------------- | ---------- |
+| DataTable widths and heights                                                                                  | sort of    |
+| Altnerating background colors for the header **column**                                                       | no         |
+| Highlighting the text on click and managing TextEditingController so that the text went in the right order    | yes        |
+| New-Game functionality took a couple clean tries. State was cleared but not whole display                     | yes        |
+| Hover over a player to show their completed phases. Never got working                                         | no         |
+| Extracting fields from a big main activity to own class sometimes worked great. Other times faield completely | No         |
+| For Tests: editable TextFields my classes actually wrap  `TextFormField` which what you need to type into     | Yes        |
 
 ## Prompt logs from the inital session
 
