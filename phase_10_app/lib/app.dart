@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phase_10_app/app_bar.dart';
 import 'package:phase_10_app/score_table.dart';
+import 'package:phase_10_app/splash_screen.dart';
 
 class Phase10App extends ConsumerStatefulWidget {
   const Phase10App({super.key});
@@ -11,6 +12,14 @@ class Phase10App extends ConsumerStatefulWidget {
 }
 
 class _Phase10AppState extends ConsumerState<Phase10App> {
+  bool _showSplash = true;
+
+  void _onSplashContinue() {
+    setState(() {
+      _showSplash = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final isDark = ref.watch(themeProvider);
@@ -24,10 +33,16 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
       ),
       darkTheme: ThemeData.dark(),
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
-      home: Scaffold(
-        appBar: Phase10AppBar(),
-        body: const Padding(padding: EdgeInsets.all(4.0), child: ScoreTable()),
-      ),
+      home:
+          _showSplash
+              ? SplashScreen(onContinue: _onSplashContinue)
+              : Scaffold(
+                appBar: Phase10AppBar(),
+                body: const Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: ScoreTable(),
+                ),
+              ),
     );
   }
 }
