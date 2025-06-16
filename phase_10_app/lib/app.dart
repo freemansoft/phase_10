@@ -26,7 +26,7 @@ class _Phase10AppState extends ConsumerState<Phase10App> {
       themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
       home: Scaffold(
         appBar: Phase10AppBar(),
-        body: const Padding(padding: EdgeInsets.all(8.0), child: ScoreTable()),
+        body: const Padding(padding: EdgeInsets.all(4.0), child: ScoreTable()),
       ),
     );
   }

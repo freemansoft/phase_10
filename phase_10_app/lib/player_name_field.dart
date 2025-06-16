@@ -44,7 +44,7 @@ class _PlayerNameFieldState extends State<PlayerNameField> {
       textAlign: TextAlign.center,
       decoration: const InputDecoration(
         isDense: true,
-        contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         border: InputBorder.none,
       ),
       style: const TextStyle(fontWeight: FontWeight.bold),

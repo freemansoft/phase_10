@@ -21,28 +21,51 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.refresh),
           tooltip: 'New Game',
           onPressed: () async {
+            bool clearNames = false;
             final result = await showDialog<bool>(
               context: context,
-              builder:
-                  (context) => AlertDialog(
-                    title: const Text('Start New Game?'),
-                    content: const Text(
-                      'Are you sure you want to start a new game? All scores and phases will be reset.',
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(context).pop(false),
-                        child: const Text('Cancel'),
+              builder: (context) {
+                return StatefulBuilder(
+                  builder:
+                      (context, setState) => AlertDialog(
+                        title: const Text('Start New Game?'),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text(
+                              'Are you sure you want to start a new game? All scores and phases will be reset.',
+                            ),
+                            const SizedBox(height: 16),
+                            CheckboxListTile(
+                              value: clearNames,
+                              onChanged: (val) {
+                                setState(() {
+                                  clearNames = val ?? false;
+                                });
+                              },
+                              title: const Text('Clear the player names'),
+                              controlAffinity: ListTileControlAffinity.leading,
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(context).pop(false),
+                            child: const Text('Cancel'),
+                          ),
+                          ElevatedButton(
+                            onPressed: () => Navigator.of(context).pop(true),
+                            child: const Text('New Game'),
+                          ),
+                        ],
                       ),
-                      ElevatedButton(
-                        onPressed: () => Navigator.of(context).pop(true),
-                        child: const Text('New Game'),
-                      ),
-                    ],
-                  ),
+                );
+              },
             );
             if (result == true) {
-              ref.read(playersProvider.notifier).resetGame();
+              ref
+                  .read(playersProvider.notifier)
+                  .resetGame(clearNames: clearNames);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Game reset!'),

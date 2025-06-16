@@ -4,6 +4,7 @@ import 'package:data_table_2/data_table_2.dart';
 import 'package:phase_10_app/player_name_field.dart';
 import 'package:phase_10_app/round_score_field.dart';
 import 'package:phase_10_app/provider/players_provider.dart';
+import 'package:phase_10_app/phase_checkbox_dropdown.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
   const ScoreTable({super.key});
@@ -12,21 +13,15 @@ class ScoreTable extends ConsumerStatefulWidget {
   ConsumerState<ScoreTable> createState() => _ScoreTableState();
 }
 
-// ...existing code...
 class _ScoreTableState extends ConsumerState<ScoreTable> {
-  // Removed: final Map<int, TextEditingController> _nameControllers = {};
-
   @override
   void dispose() {
-    // Removed: for (final controller in _nameControllers.values) { controller.dispose(); }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final players = ref.watch(playersProvider);
-
-    // Removed: name controller sync logic
 
     return DataTable2(
       columnSpacing: 12,
@@ -104,59 +99,24 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                   width: 90,
                   child: Column(
                     children: [
-                      DropdownButtonFormField<int?>(
-                        key: ValueKey(
-                          'phase_dropdown_p${playerIdx}_r$round',
-                        ), // Unique key for phase dropdown
-                        value: phase,
-                        isExpanded: true,
-                        hint: const Text('Phase'),
-                        items: [
-                          const DropdownMenuItem<int?>(
-                            value: null,
-                            child: Text('None'),
-                          ),
-                          ...List.generate(
-                            10,
-                            (i) => DropdownMenuItem<int?>(
-                              value: i + 1,
-                              child: Text('${i + 1}'),
-                            ),
-                          ),
-                        ],
+                      const SizedBox(height: 4),
+                      PhaseCheckboxDropdown(
+                        fieldKey: ValueKey(
+                          'phase_checkbox_dropdown_p${playerIdx}_r$round',
+                        ),
+                        selectedPhase: player.phases.getPhase(round),
                         onChanged: (val) {
                           ref
                               .read(playersProvider.notifier)
                               .updatePhase(playerIdx, round, val);
-
-                          // Show a 10 second alert with all completed phases
-                          final completedPhases =
-                              player.phases.completedPhasesList();
-                          if (completedPhases.isNotEmpty) {
-                            final snackBar = SnackBar(
-                              content: Text(
-                                '${player.name}: ${completedPhases.join(', ')}',
-                              ),
-                              duration: const Duration(seconds: 3),
-                            );
-                            ScaffoldMessenger.of(
-                              context,
-                            ).showSnackBar(snackBar);
-                          }
                         },
-                        decoration: const InputDecoration(
-                          isDense: true,
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: 6,
-                            horizontal: 8,
-                          ),
-                          border: InputBorder.none,
-                        ),
+                        playerIdx: playerIdx,
+                        round: round,
+                        completedPhases: player.phases.completedPhasesList(),
                       ),
+                      const SizedBox(height: 4),
                       RoundScoreField(
-                        key: ValueKey(
-                          'round_score_p${playerIdx}_r$round',
-                        ), // Unique key for round score field
+                        key: ValueKey('round_score_p${playerIdx}_r$round'),
                         score: score,
                         onChanged: (parsed) {
                           ref
@@ -175,4 +135,3 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
     );
   }
 }
-// ...existing code...

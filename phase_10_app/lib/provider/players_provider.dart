@@ -33,10 +33,12 @@ class PlayersNotifier extends StateNotifier<List<Player>> {
     state = [...state];
   }
 
-  void resetGame() {
+  void resetGame({bool clearNames = false}) {
     state = [
-      for (final player in state)
-        Player(name: player.name), // new Scores and Phases by default
+      for (int i = 0; i < state.length; i++)
+        Player(
+          name: clearNames ? 'Player ${i + 1}' : state[i].name,
+        ), // new Scores and Phases by default
     ];
   }
 }

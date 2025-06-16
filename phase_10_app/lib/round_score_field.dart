@@ -47,7 +47,7 @@ class _RoundScoreFieldState extends State<RoundScoreField> {
       decoration: const InputDecoration(
         hintText: 'Score',
         isDense: true,
-        contentPadding: EdgeInsets.symmetric(vertical: 6, horizontal: 8),
+        contentPadding: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
         border: OutlineInputBorder(),
       ),
       onChanged: (val) {
