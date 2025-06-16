@@ -1,3 +1,6 @@
+// We have to use -1 for the None value because onSelected is only called if there is a value
+// This ensures that selecting 'None' triggers the onSelected callback
+
 import 'package:flutter/material.dart';
 
 class PhaseCheckboxDropdown extends StatelessWidget {
@@ -36,7 +39,8 @@ class PhaseCheckboxDropdown extends StatelessWidget {
       ),
       itemBuilder:
           (context) => [
-            const PopupMenuItem<int?>(value: null, child: Text('None')),
+            // We have to use a -1 for the None value because onSelected is only called if there is a value
+            const PopupMenuItem<int?>(value: -1, child: Text('None')),
             ...List.generate(10, (i) {
               final phaseNum = i + 1;
               return CheckedPopupMenuItem<int?>(
@@ -47,7 +51,7 @@ class PhaseCheckboxDropdown extends StatelessWidget {
             }),
           ],
       onSelected: (val) {
-        onChanged(val);
+        onChanged(val != null && val < 0 ? val : val);
       },
     );
   }

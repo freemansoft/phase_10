@@ -3,7 +3,11 @@ class Phases {
 
   void setPhase(int round, int? phase) {
     if (round >= 0 && round < completedPhases.length) {
-      completedPhases[round] = phase;
+      if (phase != null && phase < 0) {
+        completedPhases[round] = null;
+      } else {
+        completedPhases[round] = phase;
+      }
     }
   }
 
