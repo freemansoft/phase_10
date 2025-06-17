@@ -23,11 +23,12 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
   @override
   Widget build(BuildContext context) {
     final players = ref.watch(playersProvider);
+    final minWidth = 100 + kMaxRounds * 100;
 
     return DataTable2(
       columnSpacing: 12,
       horizontalMargin: 12,
-      minWidth: 2000,
+      minWidth: minWidth.toDouble(),
       fixedLeftColumns: 1,
       fixedTopRows: 1,
       isHorizontalScrollBarVisible: true,
