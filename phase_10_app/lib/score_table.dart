@@ -85,6 +85,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                     ),
                     TotalScoreField(
                       totalScore: player.totalScore,
+                      completedPhases: player.phases.completedPhasesList(),
                       fieldKey: ValueKey('player_total_score_$playerIdx'),
                     ),
                   ],

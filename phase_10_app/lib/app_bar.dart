@@ -16,7 +16,6 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
     return AppBar(
       title: const Text('Phase-10 Scoreboard'),
       actions: [
-        // Removed: Save to Google Sheets button
         IconButton(
           icon: const Icon(Icons.refresh),
           tooltip: 'New Game',
