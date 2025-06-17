@@ -2,9 +2,10 @@
 // This ensures that selecting 'None' triggers the onSelected callback
 
 import 'package:flutter/material.dart';
-import 'package:phase_10_app/config.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:phase_10_app/provider/game_provider.dart';
 
-class PhaseCheckboxDropdown extends StatelessWidget {
+class PhaseCheckboxDropdown extends ConsumerWidget {
   final int? selectedPhase;
   final ValueChanged<int?> onChanged;
   final int playerIdx;
@@ -23,7 +24,8 @@ class PhaseCheckboxDropdown extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final game = ref.watch(gameProvider);
     return PopupMenuButton<int?>(
       key: fieldKey,
       tooltip: 'Select completed phase(s)',
@@ -42,7 +44,7 @@ class PhaseCheckboxDropdown extends StatelessWidget {
           (context) => [
             // We have to use a -1 for the None value because onSelected is only called if there is a value
             const PopupMenuItem<int?>(value: -1, child: Text('None')),
-            ...List.generate(kNumPhases, (i) {
+            ...List.generate(game.numPhases, (i) {
               final phaseNum = i + 1;
               return CheckedPopupMenuItem<int?>(
                 value: phaseNum,

@@ -6,9 +6,9 @@ class Player {
   final Scores scores;
   final Phases phases;
 
-  Player({required this.name, scores, phases})
-    : scores = scores ?? Scores(),
-      phases = phases ?? Phases();
+  Player({required this.name, required int maxRounds, required int numPhases})
+    : scores = Scores(maxRounds),
+      phases = Phases(numPhases);
 
   int get totalScore => scores.total;
 }

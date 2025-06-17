@@ -5,7 +5,7 @@ import 'package:phase_10_app/player_name_field.dart';
 import 'package:phase_10_app/round_score_field.dart';
 import 'package:phase_10_app/provider/players_provider.dart';
 import 'package:phase_10_app/phase_checkbox_dropdown.dart';
-import 'package:phase_10_app/config.dart';
+import 'package:phase_10_app/provider/game_provider.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
   const ScoreTable({super.key});
@@ -23,7 +23,8 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
   @override
   Widget build(BuildContext context) {
     final players = ref.watch(playersProvider);
-    final minWidth = 100 + kMaxRounds * 100;
+    final game = ref.watch(gameProvider);
+    final minWidth = 100 + game.maxRounds * 100;
 
     return DataTable2(
       columnSpacing: 12,
@@ -45,7 +46,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
           fixedWidth: 80,
         ),
         ...List.generate(
-          kMaxRounds,
+          game.maxRounds,
           (round) => DataColumn2(
             label: Text('Round ${round + 1}'),
             size: ColumnSize.S,
@@ -93,7 +94,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                 ),
               ),
             ),
-            ...List<DataCell>.generate(kMaxRounds, (round) {
+            ...List<DataCell>.generate(game.maxRounds, (round) {
               final score = player.scores.getScore(round);
               return DataCell(
                 SizedBox(
