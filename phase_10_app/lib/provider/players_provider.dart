@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:phase_10_app/model/player.dart';
+import 'package:phase_10_app/config.dart';
 
 final playersProvider = StateNotifierProvider<PlayersNotifier, List<Player>>((
   ref,
@@ -9,7 +10,7 @@ final playersProvider = StateNotifierProvider<PlayersNotifier, List<Player>>((
 
 class PlayersNotifier extends StateNotifier<List<Player>> {
   PlayersNotifier()
-    : super(List.generate(8, (i) => Player(name: 'Player ${i + 1}')));
+    : super(List.generate(kNumPlayers, (i) => Player(name: 'Player ${i + 1}')));
 
   void updateScore(int playerIdx, int round, int? score) {
     final player = state[playerIdx];

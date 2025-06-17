@@ -1,7 +1,7 @@
 import 'package:phase_10_app/config.dart';
 
 class Phases {
-  final List<int?> completedPhases = List.filled(kMaxRounds, null);
+  final List<int?> completedPhases = List.filled(kNumPhases, null);
 
   void setPhase(int round, int? phase) {
     if (round >= 0 && round < completedPhases.length) {

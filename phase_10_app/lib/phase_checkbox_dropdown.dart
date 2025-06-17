@@ -42,7 +42,7 @@ class PhaseCheckboxDropdown extends StatelessWidget {
           (context) => [
             // We have to use a -1 for the None value because onSelected is only called if there is a value
             const PopupMenuItem<int?>(value: -1, child: Text('None')),
-            ...List.generate(kMaxRounds, (i) {
+            ...List.generate(kNumPhases, (i) {
               final phaseNum = i + 1;
               return CheckedPopupMenuItem<int?>(
                 value: phaseNum,
