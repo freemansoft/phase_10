@@ -6,6 +6,7 @@ import 'package:phase_10_app/round_score_field.dart';
 import 'package:phase_10_app/provider/players_provider.dart';
 import 'package:phase_10_app/phase_checkbox_dropdown.dart';
 import 'package:phase_10_app/provider/game_provider.dart';
+import 'package:phase_10_app/total_score_field.dart';
 
 class ScoreTable extends ConsumerStatefulWidget {
   const ScoreTable({super.key});
@@ -82,13 +83,9 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                             .updatePlayerName(playerIdx, val);
                       },
                     ),
-                    Text(
-                      '${player.totalScore}',
-                      key: ValueKey(
-                        'player_total_score_$playerIdx',
-                      ), // Unique key for total score
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
+                    TotalScoreField(
+                      totalScore: player.totalScore,
+                      fieldKey: ValueKey('player_total_score_$playerIdx'),
                     ),
                   ],
                 ),
