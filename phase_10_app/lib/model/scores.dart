@@ -1,5 +1,7 @@
+import 'package:phase_10_app/config.dart';
+
 class Scores {
-  final List<int?> roundScores = List.filled(12, null);
+  final List<int?> roundScores = List.filled(kMaxRounds, null);
 
   int get total => roundScores.whereType<int>().fold(0, (a, b) => a + b);
 
