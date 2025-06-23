@@ -4,11 +4,17 @@ import 'package:phase_10_app/model/game.dart';
 class GameNotifier extends StateNotifier<Game> {
   GameNotifier() : super(const Game());
 
-  void newGame({int? maxRounds, int? numPhases, int? numPlayers}) {
+  void newGame({
+    int? maxRounds,
+    int? numPhases,
+    int? numPlayers,
+    bool? enablePhases,
+  }) {
     state = Game(
       maxRounds: maxRounds ?? state.maxRounds,
       numPhases: numPhases ?? state.numPhases,
       numPlayers: numPlayers ?? state.numPlayers,
+      enablePhases: enablePhases ?? state.enablePhases,
     );
   }
 
@@ -17,6 +23,16 @@ class GameNotifier extends StateNotifier<Game> {
       maxRounds: state.maxRounds,
       numPhases: state.numPhases,
       numPlayers: numPlayers,
+      enablePhases: state.enablePhases,
+    );
+  }
+
+  void setEnablePhases(bool enablePhases) {
+    state = Game(
+      maxRounds: state.maxRounds,
+      numPhases: state.numPhases,
+      numPlayers: state.numPlayers,
+      enablePhases: enablePhases,
     );
   }
 

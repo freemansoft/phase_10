@@ -73,6 +73,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
               SizedBox(
                 width: 120,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     PlayerNameField(
                       key: ValueKey('player_name_field_$playerIdx'),
@@ -87,6 +88,7 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                       totalScore: player.totalScore,
                       completedPhases: player.phases.completedPhasesList(),
                       fieldKey: ValueKey('player_total_score_$playerIdx'),
+                      enablePhases: game.enablePhases,
                     ),
                   ],
                 ),
@@ -98,23 +100,26 @@ class _ScoreTableState extends ConsumerState<ScoreTable> {
                 SizedBox(
                   width: 90,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 4),
-                      PhaseCheckboxDropdown(
-                        fieldKey: ValueKey(
-                          'phase_checkbox_dropdown_p${playerIdx}_r$round',
+                      if (game.enablePhases) ...[
+                        const SizedBox(height: 4),
+                        PhaseCheckboxDropdown(
+                          fieldKey: ValueKey(
+                            'phase_checkbox_dropdown_p${playerIdx}_r$round',
+                          ),
+                          selectedPhase: player.phases.getPhase(round),
+                          onChanged: (val) {
+                            ref
+                                .read(playersProvider.notifier)
+                                .updatePhase(playerIdx, round, val);
+                          },
+                          playerIdx: playerIdx,
+                          round: round,
+                          completedPhases: player.phases.completedPhasesList(),
                         ),
-                        selectedPhase: player.phases.getPhase(round),
-                        onChanged: (val) {
-                          ref
-                              .read(playersProvider.notifier)
-                              .updatePhase(playerIdx, round, val);
-                        },
-                        playerIdx: playerIdx,
-                        round: round,
-                        completedPhases: player.phases.completedPhasesList(),
-                      ),
-                      const SizedBox(height: 4),
+                        const SizedBox(height: 4),
+                      ],
                       RoundScoreField(
                         key: ValueKey('round_score_p${playerIdx}_r$round'),
                         score: score,

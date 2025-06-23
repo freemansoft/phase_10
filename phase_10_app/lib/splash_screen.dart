@@ -12,6 +12,7 @@ class SplashScreen extends ConsumerStatefulWidget {
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   int _selectedPlayers = 2;
+  String _sheetStyle = 'Basic Sheet';
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Phase 10 scoring aid',
+              'Game scoring aid',
               style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
@@ -55,10 +56,41 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 24),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('Sheet Style:', style: TextStyle(fontSize: 18)),
+                const SizedBox(width: 12),
+                DropdownButton<String>(
+                  value: _sheetStyle,
+                  items: const [
+                    DropdownMenuItem(
+                      value: 'Basic Sheet',
+                      child: Text('Basic Sheet'),
+                    ),
+                    DropdownMenuItem(
+                      value: 'Include Phases',
+                      child: Text('Include Phases'),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) {
+                      setState(() {
+                        _sheetStyle = value;
+                      });
+                    }
+                  },
+                ),
+              ],
+            ),
             const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 ref.read(gameProvider.notifier).setNumPlayers(_selectedPlayers);
+                ref
+                    .read(gameProvider.notifier)
+                    .setEnablePhases(_sheetStyle == 'Include Phases');
                 if (widget.onContinue != null) widget.onContinue!();
               },
               child: const Text('Continue'),
