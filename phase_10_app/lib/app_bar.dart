@@ -14,7 +14,7 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDark = ref.watch(themeProvider);
     return AppBar(
-      title: const Text('Phase-10 Scoreboard'),
+      title: const Text('Scorecard'),
       actions: [
         const NewGamePanel(),
         Row(
