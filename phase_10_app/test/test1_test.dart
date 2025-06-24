@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:phase_10_app/app.dart';
+import 'package:fs_score/app.dart';
 
 void main() {
   testWidgets('ScoreTable widget test for player name and score fields', (

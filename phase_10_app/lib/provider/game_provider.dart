@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phase_10_app/model/game.dart';
+import 'package:fs_score/model/game.dart';
 
 class GameNotifier extends StateNotifier<Game> {
   GameNotifier() : super(const Game());

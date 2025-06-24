@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phase_10_app/model/player.dart';
-import 'package:phase_10_app/provider/game_provider.dart';
+import 'package:fs_score/model/player.dart';
+import 'package:fs_score/provider/game_provider.dart';
 
 final playersProvider = StateNotifierProvider<PlayersNotifier, List<Player>>((
   ref,

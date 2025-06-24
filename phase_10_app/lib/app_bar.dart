@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:phase_10_app/provider/players_provider.dart';
+import 'package:fs_score/provider/players_provider.dart';
 
 final themeProvider = StateProvider<bool>((ref) => false);
 
@@ -32,7 +32,7 @@ class Phase10AppBar extends ConsumerWidget implements PreferredSizeWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             const Text(
-                              'Are you sure you want to start a new game? All scores and phases will be reset.',
+                              'Are you sure you want to start a new game? The scoreboard will be wiped.',
                             ),
                             const SizedBox(height: 16),
                             CheckboxListTile(
